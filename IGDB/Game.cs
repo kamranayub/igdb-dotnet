@@ -72,6 +72,9 @@ namespace IGDB
         [JsonProperty("hypes")]
         public int Hypes { get; set; }
 
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
         [JsonProperty("involved_companies")]
         public int[] InvolvedCompanies { get; set; }
 
