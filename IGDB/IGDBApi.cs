@@ -11,6 +11,6 @@ namespace IGDB
         string ApiKey { get; set; }
 
         [Post("/games")]
-        Task<Game[]> GetGamesAsync([Body] string query);
+        Task<Game[]> GetGamesAsync([Body] string query = null);
     }
 }

@@ -29,5 +29,11 @@ var games = await igdb.GetGamesAsync("fields id, name, genres.name where id = 4"
 
 ### Local Development
 
+Add environment variable:
+
+    export IGDB_API_KEY=<your api key>
+
+You don't need this to be defined globally but it does need to be in scope while running `dotnet test`.
+
     dotnet build
     dotnet test
