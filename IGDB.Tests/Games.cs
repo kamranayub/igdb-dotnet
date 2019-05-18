@@ -11,8 +11,7 @@ namespace IGDB.Tests
 
     public Games()
     {
-      _api = new RestClient("https://api-v3.igdb.com/").For<IGDBApi>();
-      _api.ApiKey = Environment.GetEnvironmentVariable("IGDB_API_KEY");
+      _api = IGDB.Client.Create(Environment.GetEnvironmentVariable("IGDB_API_KEY"));
     }
 
     [Fact]
