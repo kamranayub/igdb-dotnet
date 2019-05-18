@@ -1,41 +1,53 @@
-namespace IGDB {
-    public class IdentityOrValue<T> {
-        public int? Id {get;private set;}
+using System.Collections.Generic;
+using System.Linq;
 
-        public T Value {get;private set;}
+namespace IGDB
+{
+  public class IdentityOrValue<T> where T : class
+  {
+    public long? Id { get; private set; }
 
-        public IdentityOrValue()
-        {
-        }
+    public T Value { get; private set; }
 
-        public IdentityOrValue(int id)
-        {
-            Id = id;
-        }
-
-        public IdentityOrValue(T value)
-        {
-            Value = value;
-        }
+    public IdentityOrValue()
+    {
     }
 
-    public class IdentitiesOrValues<T> {
-        public int[] Ids {get;private set;}
-
-        public T[] Values {get;private set;}
-
-        public IdentitiesOrValues()
-        {
-        }
-
-        public IdentitiesOrValues(int[] ids)
-        {
-            Ids = ids;
-        }
-
-        public IdentitiesOrValues(T[] values)
-        {
-            Values = values;
-        }
+    public IdentityOrValue(long id)
+    {
+      Id = id;
     }
+
+    public IdentityOrValue(T value)
+    {
+      Value = value;
+    }
+
+    public IdentityOrValue(object value)
+    {
+      Value = value as T;
+    }
+  }
+
+  public class IdentitiesOrValues<T> where T : class
+  {
+    public long[] Ids { get; private set; }
+
+    public T[] Values { get; private set; }
+
+    public IdentitiesOrValues()
+    {
+    }
+
+    public IdentitiesOrValues(long[] ids)
+    {
+      Ids = ids;
+    }
+
+    public IdentitiesOrValues(object[] values)
+    {
+      var list = values.Select(value => (T)value).ToArray();
+      Values = list;
+    }
+  }
 }

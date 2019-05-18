@@ -49,7 +49,7 @@ namespace IGDB.Tests
 
             Assert.Equal("Thief", game.Name);
             Assert.NotEmpty(game.Genres.Values);
-            Assert.Equal("Stealth", game.Genres.Values[0].Name);
+            Assert.Equal("Shooter", game.Genres.Values[0].Name);
         }
     }
 }
