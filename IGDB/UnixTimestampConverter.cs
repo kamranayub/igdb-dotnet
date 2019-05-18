@@ -17,15 +17,13 @@ namespace IGDB
 
             if (reader.TokenType != JsonToken.Null)
             {
-                var jValue = new JValue(reader.Value);
-
                 if (reader.TokenType == JsonToken.Integer)
                 {
                     var rawValue = reader.Value.ToString();
                     long parsedUnixTimestamp;
                     if (long.TryParse(rawValue, out parsedUnixTimestamp))
                     {
-                        return DateTimeOffset.FromUnixTimeMilliseconds(parsedUnixTimestamp);
+                        return DateTimeOffset.FromUnixTimeSeconds(parsedUnixTimestamp);
                     }
                 }
             }
