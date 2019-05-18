@@ -20,16 +20,16 @@ namespace IGDB
         public string[] AlternativeNames { get; set; }
 
         [JsonProperty("artworks")]
-        public int[] Artworks { get; set; }
+        public IdentitiesOrValues<Artwork> Artworks { get; set; }
 
         [JsonProperty("bundles")]
-        public int[] Bundles { get; set; }
+        public IdentitiesOrValues<Game> Bundles { get; set; }
 
         [JsonProperty("category")]
         public Category? Category { get; set; }
 
         [JsonProperty("collection")]
-        public int? Collection { get; set; }
+        public IdentityOrValue<Series> Collection { get; set; }
 
         [JsonProperty("cover")]
         public int? Cover { get; set; }
@@ -67,7 +67,7 @@ namespace IGDB
         public int[] GameModes { get; set; }
 
         [JsonProperty("genres")]
-        public int[] Genres { get; set; }
+        public IdentitiesOrValues<Genre> Genres { get; set; }
 
         [JsonProperty("hypes")]
         public int Hypes { get; set; }
