@@ -12,12 +12,33 @@ A wrapper around the IGDBv3 API using .NET Core (compatible with .NET Standard 2
 
 Uses [RestEase](https://github.com/canton7/RestEase) so you can easily call the API methods. Since IGDB uses APIcalypse query language, you will need to use the QueryBuilder API (or pass the raw string).
 
-Some fields can be [expanded](https://api-docs.igdb.com/#expander) which is handled via the `MaybeExpanded` helper wrapper. If it's not expanded, it'll be a integer or array of integers and if it was expanded, it'll be the full model.
+Some fields can be [expanded](https://api-docs.igdb.com/#expander) which is handled via the `IdentityOrValue` and `IdentitiesOrValues` wrapper. See below for an example:
 
 ```c#
-var igdb = RestClient.For<IGDBApi>("http://api-v3.igdb.com/");
+using IGDB;
 
-var games = await igdb.GetGamesAsync("fields id, name, genres.name where id = 4");
+var igdb = IGDB.Client.Create(Environment.GetEnvironmentVariable("IGDB_API_KEY"));
+
+// Simple fields
+var games = await igdb.GetGamesAsync("fields id,name; where id = 4;");
+var game = games.First();
+game.Id; // 4
+game.Name; // Thief
+
+// Reference fields
+var games = await igdb.GetGamesAsync("fields id,name,cover; where id = 4;");
+var game = games.First();
+game.Cover.Id.HasValue; // true
+game.Cover.Id.Value; // 65441
+
+// Expanded fields
+var games = await igdb.GetGamesAsync("fields id,name,cover.*; where id = 4;");
+var game = games.First();
+
+// Id will not be populated but the full Cover object will be
+game.Cover.Id.HasValue; // false
+game.Cover.Value.Width; // 756
+game.Cover.Value.Height; 
 ```
 
 ## Contributing
