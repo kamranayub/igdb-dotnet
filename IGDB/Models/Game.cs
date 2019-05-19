@@ -34,8 +34,8 @@ namespace IGDB
     [JsonConverter(typeof(IdentityConverter))]
     public IdentityOrValue<Series> Collection { get; set; }
 
-
-    public int? Cover { get; set; }
+    [JsonConverter(typeof(IdentityConverter))]
+    public IdentityOrValue<Cover> Cover { get; set; }
 
 
     [JsonConverter(typeof(UnixTimestampConverter))]

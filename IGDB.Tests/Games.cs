@@ -52,6 +52,20 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    public async Task ShouldReturnResponseWithSingleGameExpandedCover()
+    {
+      var games = await _api.GetGamesAsync("fields id,cover.*; where id = 4;");
+
+      Assert.NotNull(games);
+
+      var game = games[0];
+
+      Assert.NotNull(game.Cover);
+      Assert.NotNull(game.Cover.Value);
+      Assert.Equal(200, game.Cover.Value.Width);
+    }
+
+    [Fact]
     public async Task ShouldReturnResponseWithUnixTimestamp()
     {
       var games = await _api.GetGamesAsync("fields id,created_at; where id = 4;");
