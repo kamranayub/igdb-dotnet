@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace IGDB
 {
-  public class Game
+  public class Game : ITimestamps
   {
     public int? AgeRatings { get; set; }
 
@@ -19,29 +19,29 @@ namespace IGDB
 
     public Category? Category { get; set; }
 
-    public IdentityOrValue<Series> Collection { get; set; }
+    public IdentityOrValue<Collection> Collection { get; set; }
 
     public IdentityOrValue<Cover> Cover { get; set; }
 
     public DateTimeOffset? CreatedAt { get; set; }
 
     public IdentitiesOrValues<Game> Dlcs { get; set; }
-    
+
     public IdentitiesOrValues<Game> Expansions { get; set; }
 
-    public int[] ExternalGames { get; set; }
+    public IdentitiesOrValues<ExternalGame> ExternalGames { get; set; }
 
     public DateTimeOffset? FirstReleaseDate { get; set; }
 
     public int? Follows { get; set; }
 
-    public int? Franchise { get; set; }
+    public IdentityOrValue<Franchise> Franchise { get; set; }
 
-    public int[] Franchises { get; set; }
+    public IdentitiesOrValues<Franchise> Franchises { get; set; }
 
-    public int[] GameEngines { get; set; }
+    public IdentitiesOrValues<GameEngine> GameEngines { get; set; }
 
-    public int[] GameModes { get; set; }
+    public IdentitiesOrValues<GameMode> GameModes { get; set; }
 
     public IdentitiesOrValues<Genre> Genres { get; set; }
 
@@ -49,19 +49,19 @@ namespace IGDB
 
     public int? Id { get; set; }
 
-    public int[] InvolvedCompanies { get; set; }
+    public IdentitiesOrValues<InvolvedCompany> InvolvedCompanies { get; set; }
 
-    public int[] Keywords { get; set; }
+    public IdentitiesOrValues<Keyword> Keywords { get; set; }
 
-    public int[] MultiplayerModes { get; set; }
+    public IdentitiesOrValues<MultiplayerMode> MultiplayerModes { get; set; }
 
     public string Name { get; set; }
 
-    public int? ParentGame { get; set; }
+    public IdentityOrValue<Game> ParentGame { get; set; }
 
-    public int[] Platforms { get; set; }
+    public IdentitiesOrValues<Platform> Platforms { get; set; }
 
-    public int[] PlayerPerspectives { get; set; }
+    public IdentitiesOrValues<PlayerPerspective> PlayerPerspectives { get; set; }
 
     public double? Popularity { get; set; }
 
@@ -71,15 +71,15 @@ namespace IGDB
 
     public int? RatingCount { get; set; }
 
-    public int[] ReleaseDates { get; set; }
+    public IdentitiesOrValues<ReleaseDate> ReleaseDates { get; set; }
 
-    public int[] Screenshots { get; set; }
+    public IdentitiesOrValues<Screenshot> Screenshots { get; set; }
 
     public IdentitiesOrValues<Game> SimilarGames { get; set; }
 
     public string Slug { get; set; }
 
-    public int[] StandaloneExpansions { get; set; }
+    public IdentitiesOrValues<Game> StandaloneExpansions { get; set; }
 
     public GameStatus Status { get; set; }
 
@@ -87,11 +87,11 @@ namespace IGDB
 
     public string Summary { get; set; }
 
-    public int[] Tags { get; set; }
+    public IdentitiesOrValues<Tag> Tags { get; set; }
 
-    public int[] Themes { get; set; }
+    public IdentitiesOrValues<Theme> Themes { get; set; }
 
-    public int? TimeToBeat { get; set; }
+    public IdentityOrValue<TimeToBeat> TimeToBeat { get; set; }
 
     public double? TotalRating { get; set; }
 
@@ -101,13 +101,13 @@ namespace IGDB
 
     public string Url { get; set; }
 
-    public int? VersionParent { get; set; }
+    public IdentityOrValue<Game> VersionParent { get; set; }
 
     public string VersionTitle { get; set; }
 
-    public int[] Videos { get; set; }
+    public IdentitiesOrValues<GameVideo> Videos { get; set; }
 
-    public int[] Websites { get; set; }
+    public IdentitiesOrValues<Website> Websites { get; set; }
   }
 
   public enum Category

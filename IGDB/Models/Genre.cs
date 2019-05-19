@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace IGDB
 {
-    public class Genre
+    public class Genre : ITimestamps
     {
         public DateTimeOffset? CreatedAt { get; set; }
 
