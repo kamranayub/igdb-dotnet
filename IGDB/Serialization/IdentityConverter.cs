@@ -75,12 +75,12 @@ namespace IGDB
         if (reader.TokenType == JsonToken.StartObject)
         {
           // objects
-          return defaultIdentityOrValue;
+          return Activator.CreateInstance(objectType, serializer.Deserialize(reader, expandedType));
         }
         else if (reader.TokenType == JsonToken.Integer)
         {
           // int ids
-          return defaultIdentityOrValue;
+          return Activator.CreateInstance(objectType, (long)reader.Value);
         }
       }
 
