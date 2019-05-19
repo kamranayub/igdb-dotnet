@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using RestEase;
 using Xunit;
@@ -35,6 +36,7 @@ namespace IGDB.Tests
 
       Assert.Equal("Thief", game.Name);
       Assert.NotEmpty(game.Genres.Ids);
+      Assert.Equal(5, game.Genres.Ids.First());
     }
 
     [Fact]

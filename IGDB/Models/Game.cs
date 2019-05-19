@@ -3,170 +3,109 @@ using Newtonsoft.Json;
 
 namespace IGDB
 {
-
   public class Game
   {
-
-
     public int? AgeRatings { get; set; }
-
 
     public double? AggregatedRating { get; set; }
 
-
     public int? AggregatedRatingCount { get; set; }
-
 
     public string[] AlternativeNames { get; set; }
 
-
-    [JsonConverter(typeof(IdentityConverter))]
     public IdentitiesOrValues<Artwork> Artworks { get; set; }
 
-
-    [JsonConverter(typeof(IdentityConverter))]
     public IdentitiesOrValues<Game> Bundles { get; set; }
-
 
     public Category? Category { get; set; }
 
-
-    [JsonConverter(typeof(IdentityConverter))]
     public IdentityOrValue<Series> Collection { get; set; }
 
-    [JsonConverter(typeof(IdentityConverter))]
     public IdentityOrValue<Cover> Cover { get; set; }
 
-
-    [JsonConverter(typeof(UnixTimestampConverter))]
     public DateTimeOffset? CreatedAt { get; set; }
 
-
-    public int[] Dlcs { get; set; }
-
-
-    public int[] Expansions { get; set; }
-
+    public IdentitiesOrValues<Game> Dlcs { get; set; }
+    
+    public IdentitiesOrValues<Game> Expansions { get; set; }
 
     public int[] ExternalGames { get; set; }
 
-
-    [JsonConverter(typeof(UnixTimestampConverter))]
     public DateTimeOffset? FirstReleaseDate { get; set; }
-
 
     public int? Follows { get; set; }
 
-
     public int? Franchise { get; set; }
-
 
     public int[] Franchises { get; set; }
 
-
     public int[] GameEngines { get; set; }
-
 
     public int[] GameModes { get; set; }
 
-
-    [JsonConverter(typeof(IdentityConverter))]
     public IdentitiesOrValues<Genre> Genres { get; set; }
-
 
     public int? Hypes { get; set; }
 
-
     public int? Id { get; set; }
-
 
     public int[] InvolvedCompanies { get; set; }
 
-
     public int[] Keywords { get; set; }
-
 
     public int[] MultiplayerModes { get; set; }
 
-
     public string Name { get; set; }
-
 
     public int? ParentGame { get; set; }
 
-
     public int[] Platforms { get; set; }
-
 
     public int[] PlayerPerspectives { get; set; }
 
-
     public double? Popularity { get; set; }
-
 
     public int? PulseCount { get; set; }
 
-
     public double? Rating { get; set; }
-
 
     public int? RatingCount { get; set; }
 
-
     public int[] ReleaseDates { get; set; }
-
 
     public int[] Screenshots { get; set; }
 
-    [JsonConverter(typeof(IdentityConverter))]
     public IdentitiesOrValues<Game> SimilarGames { get; set; }
-
 
     public string Slug { get; set; }
 
-
     public int[] StandaloneExpansions { get; set; }
-
 
     public GameStatus Status { get; set; }
 
-
     public string Storyline { get; set; }
-
 
     public string Summary { get; set; }
 
-
     public int[] Tags { get; set; }
-
 
     public int[] Themes { get; set; }
 
-
     public int? TimeToBeat { get; set; }
-
 
     public double? TotalRating { get; set; }
 
-
     public int? TotalRatingCount { get; set; }
 
-
-    [JsonConverter(typeof(UnixTimestampConverter))]
     public DateTimeOffset? UpdatedAt { get; set; }
-
 
     public string Url { get; set; }
 
-
     public int? VersionParent { get; set; }
-
 
     public string VersionTitle { get; set; }
 
-
     public int[] Videos { get; set; }
-
 
     public int[] Websites { get; set; }
   }

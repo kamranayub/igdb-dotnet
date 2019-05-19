@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -24,6 +25,10 @@ namespace IGDB
       {
         JsonSerializerSettings = new JsonSerializerSettings()
         {
+          Converters = new List<JsonConverter>() {
+            new IdentityConverter(),
+            new UnixTimestampConverter()
+          },
           ContractResolver = new DefaultContractResolver()
           {
             NamingStrategy = new SnakeCaseNamingStrategy()
