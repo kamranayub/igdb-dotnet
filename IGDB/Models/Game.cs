@@ -11,7 +11,7 @@ namespace IGDB
 
     public int? AggregatedRatingCount { get; set; }
 
-    public string[] AlternativeNames { get; set; }
+    public IdentitiesOrValues<AlternativeName> AlternativeNames { get; set; }
 
     public IdentitiesOrValues<Artwork> Artworks { get; set; }
 
