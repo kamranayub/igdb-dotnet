@@ -23,7 +23,7 @@ namespace IGDB.Models
     public DateTimeOffset? UpdatedAt { get; set; }
     public string Uplay { get; set; }
     public string Url { get; set; }
-    public IdentityOrValue<User> User { get; set; }
+    public int? User { get; set; }
     public IdentitiesOrValues<PageWebsite> Websites { get; set; }
   }
 

@@ -1,6 +1,6 @@
 namespace IGDB.Models
 {
-  public class User
+  public class Person
   {
   }
 }
