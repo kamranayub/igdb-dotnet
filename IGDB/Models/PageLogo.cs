@@ -1,6 +1,6 @@
-namespace IGDB
+namespace IGDB.Models
 {
-  public class GameEngineLogo
+  public class PageLogo
   {
     public bool? AlphaChannel { get; set; }
     public bool? Animated { get; set; }
