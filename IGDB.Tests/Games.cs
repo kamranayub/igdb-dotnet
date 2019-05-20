@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using IGDB.Models;
 using RestEase;
 using Xunit;
 
@@ -9,6 +10,7 @@ namespace IGDB.Tests
   public class Games
   {
     IGDBApi _api;
+    const string _endpoint = "games";
 
     public Games()
     {
@@ -18,7 +20,7 @@ namespace IGDB.Tests
     [Fact]
     public async Task ShouldReturnResponseWithoutQuery()
     {
-      var games = await _api.GetGamesAsync();
+      var games = await _api.QueryAsync<Game>(_endpoint);
 
       Assert.NotNull(games);
       Assert.True(games.Length == 10);
@@ -27,7 +29,7 @@ namespace IGDB.Tests
     [Fact]
     public async Task ShouldReturnResponseWithSingleGame()
     {
-      var games = await _api.GetGamesAsync("fields id,name,genres; where id = 4;");
+      var games = await _api.QueryAsync<Game>(_endpoint, "fields id,name,genres; where id = 4;");
 
       Assert.NotNull(games);
       Assert.True(games.Length == 1);
@@ -42,7 +44,7 @@ namespace IGDB.Tests
     [Fact]
     public async Task ShouldReturnResponseWithSingleGameExpandedGenres()
     {
-      var games = await _api.GetGamesAsync("fields id,name,genres.name; where id = 4;");
+      var games = await _api.QueryAsync<Game>(_endpoint, "fields id,name,genres.name; where id = 4;");
 
       Assert.NotNull(games);
 
@@ -56,7 +58,7 @@ namespace IGDB.Tests
     [Fact]
     public async Task ShouldReturnResponseWithSingleGameCover()
     {
-      var games = await _api.GetGamesAsync("fields id,cover; where id = 4;");
+      var games = await _api.QueryAsync<Game>(_endpoint, "fields id,cover; where id = 4;");
 
       Assert.NotNull(games);
 
@@ -70,7 +72,7 @@ namespace IGDB.Tests
     [Fact]
     public async Task ShouldReturnResponseWithSingleGameExpandedCover()
     {
-      var games = await _api.GetGamesAsync("fields id,cover.*; where id = 4;");
+      var games = await _api.QueryAsync<Game>(_endpoint, "fields id,cover.*; where id = 4;");
 
       Assert.NotNull(games);
 
@@ -84,7 +86,7 @@ namespace IGDB.Tests
     [Fact]
     public async Task ShouldReturnResponseWithUnixTimestamp()
     {
-      var games = await _api.GetGamesAsync("fields id,created_at; where id = 4;");
+      var games = await _api.QueryAsync<Game>(_endpoint, "fields id,created_at; where id = 4;");
 
       Assert.NotNull(games);
 

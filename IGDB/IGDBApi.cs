@@ -14,8 +14,8 @@ namespace IGDB
     [Header("user-key")]
     string ApiKey { get; set; }
 
-    [Post("/games")]
-    Task<Game[]> GetGamesAsync([Body] string query = null);
+    [Post("/{endpoint}")]
+    Task<T[]> QueryAsync<T>([Path]string endpoint, [Body] string query = null);
   }
 
   public static class Client
