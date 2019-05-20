@@ -16,27 +16,30 @@ Uses [RestEase](https://github.com/canton7/RestEase) so you can easily call the 
 
 Endpoints can be passed using the constants in `IGDB.Client.Endpoints` or as a custom string.
 
+Models are domain objects found in `IGDB.Models` and correspond directly to the [Endpoints documentation](https://api-docs.igdb.com/#endpoints).
+
 Some fields can be [expanded](https://api-docs.igdb.com/#expander) which is handled via the `IdentityOrValue` and `IdentitiesOrValues` wrapper. See below for an example:
 
 ```c#
 using IGDB;
+using IGDB.Models;
 
 var igdb = IGDB.Client.Create(Environment.GetEnvironmentVariable("IGDB_API_KEY"));
 
 // Simple fields
-var games = await igdb.QueryAsync<Game>( IGDB.Client.Endpoints.Games, query: "fields id,name; where id = 4;");
+var games = await igdb.QueryAsync<Game>(IGDB.Client.Endpoints.Games, query: "fields id,name; where id = 4;");
 var game = games.First();
 game.Id; // 4
 game.Name; // Thief
 
 // Reference fields
-var games = await igdb.QueryAsync(IGDB.Client.Endpoints.Games, query: "fields id,name,cover; where id = 4;");
+var games = await igdb.QueryAsync<Game>(IGDB.Client.Endpoints.Games, query: "fields id,name,cover; where id = 4;");
 var game = games.First();
 game.Cover.Id.HasValue; // true
 game.Cover.Id.Value; // 65441
 
 // Expanded fields
-var games = await igdb.QueryAsync(IGDB.Client.Endpoints.Games, query: "fields id,name,cover.*; where id = 4;");
+var games = await igdb.QueryAsync<Game>(IGDB.Client.Endpoints.Games, query: "fields id,name,cover.*; where id = 4;");
 var game = games.First();
 
 // Id will not be populated but the full Cover object will be
