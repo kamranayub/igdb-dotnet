@@ -1,6 +1,6 @@
 using System;
 
-namespace IGDB
+namespace IGDB.Models
 {
   public class InvolvedCompany : ITimestamps
   {

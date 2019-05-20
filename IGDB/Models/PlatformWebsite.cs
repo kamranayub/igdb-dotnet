@@ -1,6 +1,6 @@
 namespace IGDB.Models
 {
-  public class CompanyWebsite
+  public class PlatformWebsite
   {
     public WebsiteCategory? Category { get; set; }
     public bool? Trusted { get; set; }

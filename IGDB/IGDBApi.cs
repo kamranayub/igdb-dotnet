@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IGDB.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestEase;

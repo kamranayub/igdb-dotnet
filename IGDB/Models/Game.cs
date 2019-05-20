@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace IGDB
+namespace IGDB.Models
 {
   public class Game : ITimestamps
   {

@@ -1,4 +1,4 @@
-namespace IGDB
+namespace IGDB.Models
 {
   public class GameEngineLogo
   {

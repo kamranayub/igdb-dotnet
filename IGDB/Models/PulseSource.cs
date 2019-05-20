@@ -1,9 +1,9 @@
 namespace IGDB.Models
 {
-  public class AlternativeName
+  public class PulseSource
   {
-    public string Comment { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
     public string Name { get; set; }
+    public IdentityOrValue<Page> Page { get; set; }
   }
 }

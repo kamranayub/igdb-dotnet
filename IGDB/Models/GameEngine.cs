@@ -1,6 +1,6 @@
 using System;
 
-namespace IGDB
+namespace IGDB.Models
 {
   public class GameEngine : ITimestamps
   {
