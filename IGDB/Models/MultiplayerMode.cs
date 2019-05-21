@@ -9,6 +9,7 @@ namespace IGDB.Models
     [JsonProperty("dropin")]
     public bool? DropIn { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
+    public int? Id { get; set; }
     [JsonProperty("lancoop")]
     public bool? LanCoop { get; set; }
     [JsonProperty("offlinecoop")]

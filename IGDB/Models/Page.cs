@@ -14,6 +14,7 @@ namespace IGDB.Models
     public string Description { get; set; }
     public IdentityOrValue<Feed> Feed { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
+    public int? Id { get; set; }
     public string Name { get; set; }
     public string Origin { get; set; }
     public int? PageFollowsCount { get; set; }

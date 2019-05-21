@@ -10,6 +10,7 @@ namespace IGDB.Models
     public int? FeedLikesCount { get; set; }
     public IdentityOrValue<GameVideo> FeedVideo { get; set; }
     public IdentitiesOrValues<Game> Games { get; set; }
+    public int? Id { get; set; }
     public string Meta { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
     public IdentityOrValue<Pulse> Pulse { get; set; }

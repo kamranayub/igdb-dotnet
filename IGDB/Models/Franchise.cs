@@ -6,6 +6,7 @@ namespace IGDB.Models
   {
     public DateTimeOffset? CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
+    public int? Id { get; set; }
     public IdentitiesOrValues<Game> Games { get; set; }
     public string Name { get; set; }
     public string Slug { get; set; }

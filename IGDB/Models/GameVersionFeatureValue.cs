@@ -4,6 +4,7 @@ namespace IGDB.Models
   {
     public IdentityOrValue<Game> Game { get; set; }
     public IdentityOrValue<GameVersionFeature> Feature { get; set; }
+    public int? Id { get; set; }
     public IncludedFeature? IncludedFeature { get; set; }
     public string Note { get; set; }
   }

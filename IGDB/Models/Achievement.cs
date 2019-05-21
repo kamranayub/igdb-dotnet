@@ -10,6 +10,7 @@ namespace IGDB.Models
     public string Description { get; set; }
     public string ExternalId { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
+    public int? Id { get; set; }
     public AchievementLanguage Language { get; set; }
     public string Name { get; set; }
     public double? OwnersPercentage { get; set; }

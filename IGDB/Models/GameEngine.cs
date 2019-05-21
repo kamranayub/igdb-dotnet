@@ -10,6 +10,7 @@ namespace IGDB.Models
 
     public string Description { get; set; }
     public IdentityOrValue<GameEngineLogo> Logo { get; set; }
+    public int? Id { get; set; }
 
     public string Name { get; set; }
 

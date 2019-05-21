@@ -6,6 +6,7 @@ namespace IGDB.Models
   {
     public string Author { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
+    public int? Id { get; set; }
     public string Image { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
     public IdentityOrValue<PulseSource> PulseSource { get; set; }

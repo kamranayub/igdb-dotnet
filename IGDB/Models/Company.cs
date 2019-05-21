@@ -18,6 +18,7 @@ namespace IGDB.Models
     public string Description { get; set; }
 
     public IdentitiesOrValues<Game> Developed { get; set; }
+    public int? Id { get; set; }
 
     public IdentityOrValue<CompanyLogo> Logo { get; set; }
 
@@ -26,7 +27,7 @@ namespace IGDB.Models
     public IdentitiesOrValues<Game> Published { get; set; }
     public string Slug { get; set; }
     public DateTimeOffset? StartDate { get; set; }
-    public StartDateCategory StartDateCategory { get; set; }
+    public StartDateCategory? StartDateCategory { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
     public string Url { get; set; }
     public IdentitiesOrValues<CompanyWebsite> Websites { get; set; }

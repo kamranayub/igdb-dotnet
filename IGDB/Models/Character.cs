@@ -9,7 +9,8 @@ namespace IGDB.Models
     public DateTimeOffset? CreatedAt { get; set; }
     public string Description { get; set; }
     public IdentitiesOrValues<Game> Games { get; set; }
-    public Gender Gender { get; set; }
+    public Gender? Gender { get; set; }
+    public int? Id { get; set; }
     public IdentityOrValue<CharacterMugShot> MugShot { get; set; }
     public string Name { get; set; }
     public IdentitiesOrValues<People> People { get; set; }

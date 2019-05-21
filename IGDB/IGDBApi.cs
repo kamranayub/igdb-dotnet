@@ -16,6 +16,9 @@ namespace IGDB
 
     [Post("/{endpoint}")]
     Task<T[]> QueryAsync<T>([Path]string endpoint, [Body] string query = null);
+
+    [Get("/api_status")]
+    Task<ApiStatus> GetApiStatus();
   }
 
   public static class Client

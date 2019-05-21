@@ -9,6 +9,7 @@ namespace IGDB.Models
     [JsonProperty("cpu")]
     public string CPU { get; set; }
     public string Graphics { get; set; }
+    public int? Id { get; set; }
     public IdentityOrValue<PlatformVersionCompany> MainManufacturer { get; set; }
     public string Media { get; set; }
     public string Memory { get; set; }

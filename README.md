@@ -48,6 +48,22 @@ game.Cover.Value.Width; // 756
 game.Cover.Value.Height;
 ```
 
+### Images
+
+Use the `IGDB.ImageHelper` to generate URLs for images. It exposes the raw template URL `IGDB_IMAGE_TEMPLATE` and mapping `ImageSizeMap` of `ImageSize` enum to `string` value:
+
+```c#
+var games = await igdb.QueryAsync<Game>(IGDB.Client.Endpoints.Games, query: "fields artworks.image_id; where id = 4;");
+var artworkImageId = games.First().Artworks.Values.First().ImageId;
+
+// Thumbnail
+var thumb = IGDB.ImageHelper.GetSizedImage(imageId: artworkImageId, size: ImageSize.Thumb, retina: false);
+var thumb2X = IGDB.ImageHelper.GetSizedImage(imageId: artworkImageId, size: ImageSize.Thumb, retina: true);
+
+// Covers
+var coverSmall = IGDB.ImageHelper.GetSizedImage(imageId: artworkImageId, size: ImageSize.CoverSmall, retina: false);
+```
+
 ## Contributing
 
 ### Prerequisites

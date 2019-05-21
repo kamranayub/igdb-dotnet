@@ -5,7 +5,7 @@ namespace IGDB.Models
 {
   public class Game : ITimestamps
   {
-    public int? AgeRatings { get; set; }
+    public IdentitiesOrValues<AgeRating> AgeRatings { get; set; }
 
     public double? AggregatedRating { get; set; }
 
@@ -81,7 +81,7 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<Game> StandaloneExpansions { get; set; }
 
-    public GameStatus Status { get; set; }
+    public GameStatus? Status { get; set; }
 
     public string Storyline { get; set; }
 

@@ -8,6 +8,7 @@ namespace IGDB.Models
     public DateTimeOffset? CreatedAt { get; set; }
 
     public IdentitiesOrValues<Game> Games { get; set; }
+    public int? Id { get; set; }
 
     public string Name { get; set; }
 
