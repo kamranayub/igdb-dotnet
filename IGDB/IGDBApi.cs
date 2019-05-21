@@ -29,6 +29,13 @@ namespace IGDB
     Task<T[]> QueryAsync<T>([Path]string endpoint, [Body] string query = null);
 
     /// <summary>
+    /// For authenticated requests, get authenticated user info
+    /// </summary>
+    /// <returns></returns>
+    [Get("/" + Client.Endpoints.Private.Me)]
+    Task<Me> GetPrivateMe();
+
+    /// <summary>
     /// Returns your API key status with usage information
     /// </summary>
     /// <returns></returns>
@@ -126,6 +133,18 @@ namespace IGDB
       public const string Titles = "titles";
       public const string TimeToBeats = "time_to_beats";
       public const string Websites = "websites";
+
+      public static class Private
+      {
+        public const string FeedFollows = "private/feed_follows";
+        public const string Follows = "private/follows";
+        public const string Lists = "private/lists";
+        public const string ListEntries = "private/list_entries";
+        public const string Me = "private/me";
+        public const string Rates = "private/rates";
+        public const string Reviews = "private/reviews";
+        public const string ReviewVideos = "private/review_videos";
+      }
     }
   }
 }
