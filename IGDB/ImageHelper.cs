@@ -17,7 +17,16 @@ namespace IGDB
         /// <typeparam name="string"></typeparam>
         /// <returns></returns>
         public static IDictionary<ImageSize, string> ImageSizeMap = new Dictionary<ImageSize, string>() {
-          {ImageSize.CoverSmall, "cover_small"}
+          {ImageSize.CoverSmall, "cover_small"},
+          {ImageSize.CoverBig, "cover_big"},
+          {ImageSize.ScreenshotMed, "screenshot_med"},
+          {ImageSize.ScreenshotBig, "screenshot_big"},
+          {ImageSize.ScreenshotHuge, "screenshot_huge"},
+          {ImageSize.LogoMed, "logo_med"},
+          {ImageSize.Thumb, "thumb"},
+          {ImageSize.Micro, "micro"},
+          {ImageSize.HD720, "720p"},
+          {ImageSize.HD1080, "1080p"},
         };
 
         /// <summary>
