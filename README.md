@@ -57,11 +57,11 @@ var games = await igdb.QueryAsync<Game>(IGDB.Client.Endpoints.Games, query: "fie
 var artworkImageId = games.First().Artworks.Values.First().ImageId;
 
 // Thumbnail
-var thumb = IGDB.ImageHelper.GetSizedImage(imageId: artworkImageId, size: ImageSize.Thumb, retina: false);
-var thumb2X = IGDB.ImageHelper.GetSizedImage(imageId: artworkImageId, size: ImageSize.Thumb, retina: true);
+var thumb = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageSize.Thumb, retina: false);
+var thumb2X = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageSize.Thumb, retina: true);
 
 // Covers
-var coverSmall = IGDB.ImageHelper.GetSizedImage(imageId: artworkImageId, size: ImageSize.CoverSmall, retina: false);
+var coverSmall = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageSize.CoverSmall, retina: false);
 ```
 
 ## Contributing

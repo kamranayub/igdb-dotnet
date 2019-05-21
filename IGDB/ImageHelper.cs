@@ -28,7 +28,7 @@ namespace IGDB
         /// <param name="size">The requested size</param>
         /// <param name="retina">Whether or not to request a retina (2X) size</param>
         /// <returns>Image URL with requested parameters filled in</returns>
-        public static string GetSizedImage(string imageId, ImageSize size = ImageSize.Thumb, bool retina = false)
+        public static string GetImageUrl(string imageId, ImageSize size = ImageSize.Thumb, bool retina = false)
         {
             if (ImageSizeMap.ContainsKey(size))
             {
