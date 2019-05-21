@@ -20,7 +20,7 @@ namespace IGDB
       var defaultIdentitiesOrValues = new IdentitiesOrValues<object>();
       if (reader.TokenType == JsonToken.Null)
       {
-        if (objectType.IsAssignableFrom(typeof(IdentityOrValue<>)))
+        if (IsAssignableToGenericType(objectType, typeof(IdentityOrValue<>)))
         {
           return defaultIdentityOrValue;
         }

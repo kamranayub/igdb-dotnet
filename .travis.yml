@@ -5,3 +5,10 @@ dotnet: 2.2.204
 script:
 - dotnet restore
 - dotnet test
+deploy:
+  - provider: script
+    script:
+      - dotnet pack --no-build -c Release -o ./dist -p:PackageVersion="$(TRAVIS_TAG)" IGDB/IGDB.csproj
+    on:
+      all_branches: true
+      condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+
