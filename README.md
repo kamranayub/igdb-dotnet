@@ -48,6 +48,33 @@ game.Cover.Value.Width; // 756
 game.Cover.Value.Height;
 ```
 
+### Custom Client
+
+You can use [RestEase](https://github.com/canton7/RestEase) directly as well. Create an instance beforehand and pass it to `IGDB.Client.Create(apiKey, client)` overload to attach the required JSON serializer settings and API key.
+
+For example, this is the default way the client is built for you:
+
+```c#
+public static IGDBApi Create(string apiKey, RestClient client)
+{
+  client.JsonSerializerSettings = new JsonSerializerSettings()
+  {
+    Converters = new List<JsonConverter>() {
+        new IdentityConverter(),
+        new UnixTimestampConverter()
+      },
+    ContractResolver = new DefaultContractResolver()
+    {
+      NamingStrategy = new SnakeCaseNamingStrategy()
+    }
+  };
+
+  var api = client.For<IGDBApi>();
+  api.ApiKey = apiKey;
+  return api;
+}
+```
+
 ### Images
 
 Use the `IGDB.ImageHelper` to generate URLs for images. It exposes the raw template URL `IGDB_IMAGE_TEMPLATE` and mapping `ImageSizeMap` of `ImageSize` enum to `string` value:

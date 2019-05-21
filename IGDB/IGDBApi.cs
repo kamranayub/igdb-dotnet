@@ -23,24 +23,41 @@ namespace IGDB
 
   public static class Client
   {
+
+    /// <summary>
+    /// Create a default IGDB API client with specified API key
+    /// </summary>
+    /// <param name="apiKey">Your private IGDB API key. Keep it secret, keep it safe!</param>
+    /// <returns></returns>
     public static IGDBApi Create(string apiKey)
     {
-      var client = new RestClient("https://api-v3.igdb.com")
+      return Create(apiKey, new RestClient("https://api-v3.igdb.com"));
+    }
+
+    /// <summary>
+    /// Create a IGDB API client based on a custom-created RestEase client. Adds required
+    /// JSON serializer settings on top of any existing settings.
+    /// </summary>
+    /// <param name="apiKey">Your private IGDB API key. Keep it secret, keep it safe!</param>
+    /// <param name="client">A custom RestEase.RestClient</param>
+    /// <returns></returns>
+    public static IGDBApi Create(string apiKey, RestClient client)
+    {
+      client.JsonSerializerSettings = new JsonSerializerSettings()
       {
-        JsonSerializerSettings = new JsonSerializerSettings()
-        {
-          Converters = new List<JsonConverter>() {
+        Converters = new List<JsonConverter>() {
             new IdentityConverter(),
             new UnixTimestampConverter()
           },
-          ContractResolver = new DefaultContractResolver()
-          {
-            NamingStrategy = new SnakeCaseNamingStrategy()
-          }
+        ContractResolver = new DefaultContractResolver()
+        {
+          NamingStrategy = new SnakeCaseNamingStrategy()
         }
-      }.For<IGDBApi>();
-      client.ApiKey = apiKey;
-      return client;
+      };
+
+      var api = client.For<IGDBApi>();
+      api.ApiKey = apiKey;
+      return api;
     }
 
     public static class Endpoints
