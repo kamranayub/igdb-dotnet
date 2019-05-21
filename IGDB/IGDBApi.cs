@@ -11,12 +11,27 @@ namespace IGDB
   [Header("Accept", "application/json")]
   public interface IGDBApi
   {
+    /// <summary>
+    /// Your secret, private IGDB API token
+    /// </summary>
+    /// <value></value>
     [Header("user-key")]
     string ApiKey { get; set; }
 
+    /// <summary>
+    /// Queries a standard IGDB endpoint with an APIcalypse query. See endpoints in <see cref="IGDB.Client.Endpoints" />.
+    /// </summary>
+    /// <param name="endpoint">The IGDB endpoint name to query, see <see cref="IGDB.Client.Endpoints" /></param>
+    /// <param name="query">The APIcalypse query to send</param>
+    /// <typeparam name="T">The IGDB.Models.* entity to deserialize the response for.</typeparam>
+    /// <returns>Array of IGDB models of the specified type</returns>
     [Post("/{endpoint}")]
     Task<T[]> QueryAsync<T>([Path]string endpoint, [Body] string query = null);
 
+    /// <summary>
+    /// Returns your API key status with usage information
+    /// </summary>
+    /// <returns></returns>
     [Get("/api_status")]
     Task<ApiStatus> GetApiStatus();
   }
@@ -46,9 +61,9 @@ namespace IGDB
       client.JsonSerializerSettings = new JsonSerializerSettings()
       {
         Converters = new List<JsonConverter>() {
-            new IdentityConverter(),
-            new UnixTimestampConverter()
-          },
+          new IdentityConverter(),
+          new UnixTimestampConverter()
+        },
         ContractResolver = new DefaultContractResolver()
         {
           NamingStrategy = new SnakeCaseNamingStrategy()
