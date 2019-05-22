@@ -6,6 +6,7 @@ script:
 - dotnet restore
 - dotnet test
 deploy:
+  skip_cleanup: true
   - provider: script
     script: bash deploy.sh $TRAVIS_TAG $NUGET_API_KEY
     on:
