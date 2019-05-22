@@ -7,8 +7,8 @@ script:
 - dotnet test
 deploy:
   skip_cleanup: true
-  - provider: script
-    script: bash deploy.sh $TRAVIS_TAG $NUGET_API_KEY
-    on:
-      all_branches: true
-      condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+
+  provider: script
+  script: bash deploy.sh $TRAVIS_TAG $NUGET_API_KEY
+  on:
+    all_branches: true
+    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+
