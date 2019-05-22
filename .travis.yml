@@ -7,9 +7,7 @@ script:
 - dotnet test
 deploy:
   - provider: script
-    script:
-      - dotnet pack --no-build -c Release -o ./dist -p:PackageVersion="$(TRAVIS_TAG)" -p:Title="IGDB API Wrapper" -p:Authors="kayub" -p:PackageDescription="A .NET Standard wrapper around the IGDB v3 games database API" -p:PackageLicenseExpression="Apache-2.0" -p:PackageTags="igdb;games;api;wrapper" IGDB/IGDB.csproj
-      - dotnet nuget push ./dist/IGDB.nupkg -k $NUGET_API_KEY
+    script: bash deploy.sh $TRAVIS_TAG $NUGET_API_KEY
     on:
       all_branches: true
       condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+
