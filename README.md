@@ -2,7 +2,7 @@
 
 ![travis build](https://travis-ci.com/kamranayub/igdb-dotnet.svg?branch=master)
 
-A wrapper around the IGDBv3 API using .NET Core (compatible with .NET Standard 2.0+).
+A wrapper around the [IGDBv3 API](https://api-docs.igdb.com) using .NET Core (compatible with .NET Standard 2.0+).
 
 ## Usage
 
