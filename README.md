@@ -8,7 +8,14 @@ A wrapper around the [IGDBv3 API](https://api-docs.igdb.com) using .NET Core (co
 
 ### Install
 
-    TBD
+    # .NET Core
+    dotnet add package IGDB
+
+    # .NET Framework
+    Install-Package IGDB
+
+    # Paket
+    paket add IGDB
 
 ### Quickstart
 
