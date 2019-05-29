@@ -25,6 +25,7 @@ namespace IGDB.Models
   public enum ExternalCategory
   {
     Steam = 1,
+    GiantBomb = 3,
     GOG = 5,
     YouTube = 10,
     Microsoft = 11,
