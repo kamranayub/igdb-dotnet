@@ -1,12 +1,14 @@
 # IGDB .NET SDK
 
-![travis build](https://travis-ci.com/kamranayub/igdb-dotnet.svg?branch=master)
+![travis build](https://travis-ci.com/kamranayub/igdb-dotnet.svg?branch=master) ![Nuget](https://img.shields.io/nuget/v/IGDB.svg)
 
 A wrapper around the [IGDBv3 API](https://api-docs.igdb.com) using .NET Core (compatible with .NET Standard 2.0+).
 
 ## Usage
 
 ### Install
+
+via [Nuget](https://www.nuget.org/packages/IGDB/)
 
     # .NET Core
     dotnet add package IGDB
