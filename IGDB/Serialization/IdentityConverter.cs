@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace IGDB
 {
-  internal class IdentityConverter : JsonConverter
+  public class IdentityConverter : JsonConverter
   {
     public override bool CanConvert(Type objectType)
     {
@@ -16,18 +16,9 @@ namespace IGDB
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
-      var defaultIdentityOrValue = new IdentityOrValue<object>();
-      var defaultIdentitiesOrValues = new IdentitiesOrValues<object>();
       if (reader.TokenType == JsonToken.Null)
       {
-        if (IsAssignableToGenericType(objectType, typeof(IdentityOrValue<>)))
-        {
-          return defaultIdentityOrValue;
-        }
-        else
-        {
-          return defaultIdentitiesOrValues;
-        }
+        return existingValue;
       }
 
       var expandedType = objectType.GetGenericArguments()[0];
@@ -89,7 +80,19 @@ namespace IGDB
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-      throw new NotImplementedException();
+      JToken t = JToken.FromObject(value);
+
+      // Determine type of identity
+      if (t.Type != JTokenType.Null)
+      {
+        var children = t.Children();
+        var populated = children.FirstOrDefault(jt => jt.First.Type != JTokenType.Null && jt.Type == JTokenType.Property);
+
+        if (populated != null && populated.HasValues)
+        {
+          populated.First.WriteTo(writer);
+        }
+      }
     }
 
     public static bool IsAssignableToGenericType(Type givenType, Type genericType)
