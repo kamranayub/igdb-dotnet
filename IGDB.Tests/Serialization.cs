@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+using IGDB.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Xunit;
+
+namespace IGDB.Tests
+{
+  public class SerializationTests
+  {
+    [Fact]
+    public void IdentityConverter_Should_Serialize_and_Deserialize_Id()
+    {
+      var game = new Game();
+      game.ParentGame = new IdentityOrValue<Game>(3);
+
+      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+
+      Assert.NotNull(deserialized.ParentGame);
+      Assert.NotNull(deserialized.ParentGame.Id);
+      Assert.Equal(3, deserialized.ParentGame.Id.Value);
+    }
+
+    [Fact]
+    public void IdentityConverter_Should_Serialize_and_Deserialize_Value()
+    {
+      var game = new Game();
+      game.ParentGame = new IdentityOrValue<Game>(new Game() { Name = "Test" });
+
+      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+
+      Assert.NotNull(deserialized.ParentGame);
+      Assert.NotNull(deserialized.ParentGame.Value.Name);
+      Assert.Equal("Test", deserialized.ParentGame.Value.Name);
+    }
+
+    [Fact]
+    public void IdentityConverter_Should_Serialize_and_Deserialize_Ids()
+    {
+      var game = new Game();
+      game.Genres = new IdentitiesOrValues<Genre>(new long[] { 0, 1, 2, 3 });
+
+      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+
+      Assert.NotNull(deserialized.Genres);
+      Assert.NotNull(deserialized.Genres.Ids);
+      Assert.Contains(0, deserialized.Genres.Ids);
+      Assert.Contains(3, deserialized.Genres.Ids);
+    }
+
+    [Fact]
+    public void IdentityConverter_Should_Serialize_and_Deserialize_Values()
+    {
+      var game = new Game();
+      var genres = new Genre[] {
+        new Genre() { Id = 1 },
+        new Genre() { Id = 3 }
+      };
+      game.Genres = new IdentitiesOrValues<Genre>(genres);
+
+      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+
+      Assert.NotNull(deserialized.Genres);
+      Assert.NotNull(deserialized.Genres.Values);
+      Assert.Equal(1, deserialized.Genres.Values[0].Id.Value);
+      Assert.Equal(3, deserialized.Genres.Values[1].Id.Value);
+    }
+  }
+}

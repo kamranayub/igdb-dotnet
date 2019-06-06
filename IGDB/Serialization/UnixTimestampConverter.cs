@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace IGDB
 {
-    internal class UnixTimestampConverter : JsonConverter
+    public class UnixTimestampConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

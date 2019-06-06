@@ -46,6 +46,18 @@ namespace IGDB
   public static class Client
   {
 
+    public static JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings()
+    {
+      Converters = new List<JsonConverter>() {
+          new IdentityConverter(),
+          new UnixTimestampConverter()
+        },
+      ContractResolver = new DefaultContractResolver()
+      {
+        NamingStrategy = new SnakeCaseNamingStrategy()
+      }
+    };
+
     /// <summary>
     /// Create a default IGDB API client with specified API key
     /// </summary>
@@ -65,17 +77,7 @@ namespace IGDB
     /// <returns></returns>
     public static IGDBApi Create(string apiKey, RestClient client)
     {
-      client.JsonSerializerSettings = new JsonSerializerSettings()
-      {
-        Converters = new List<JsonConverter>() {
-          new IdentityConverter(),
-          new UnixTimestampConverter()
-        },
-        ContractResolver = new DefaultContractResolver()
-        {
-          NamingStrategy = new SnakeCaseNamingStrategy()
-        }
-      };
+      client.JsonSerializerSettings = DefaultJsonSerializerSettings;
 
       var api = client.For<IGDBApi>();
       api.ApiKey = apiKey;
