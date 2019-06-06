@@ -70,5 +70,18 @@ namespace IGDB.Tests
       Assert.Equal(1, deserialized.Genres.Values[0].Id.Value);
       Assert.Equal(3, deserialized.Genres.Values[1].Id.Value);
     }
+
+    [Fact]
+    public void UnixTimestampConverter_Should_Serialize_And_Deserialize_Unix_Time() {
+      var time = DateTimeOffset.Now;
+      var game = new Game() {
+        CreatedAt = time
+      };
+
+      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+
+      Assert.Equal(time.ToUnixTimeSeconds(), deserialized.CreatedAt.Value.ToUnixTimeSeconds());
+    }
   }
 }
