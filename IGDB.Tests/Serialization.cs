@@ -72,9 +72,31 @@ namespace IGDB.Tests
     }
 
     [Fact]
-    public void UnixTimestampConverter_Should_Serialize_And_Deserialize_Unix_Time() {
+    public void IdentityConverter_Should_Serialize_and_Deserialize_Nested_Values()
+    {
+      var game = new Game();
+      var externalGames = new[] {
+        new ExternalGame() {
+          Game = new IdentityOrValue<Game>(new Game() { Id = 1 })
+        }
+      };
+      game.ExternalGames = new IdentitiesOrValues<ExternalGame>(externalGames);
+
+      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+
+      Assert.NotNull(deserialized.ExternalGames);
+      Assert.NotNull(deserialized.ExternalGames.Values);
+      Assert.NotNull(deserialized.ExternalGames.Values[0].Game.Value);
+      Assert.Equal(1, deserialized.ExternalGames.Values[0].Game.Value.Id);
+    }
+
+    [Fact]
+    public void UnixTimestampConverter_Should_Serialize_And_Deserialize_Unix_Time()
+    {
       var time = DateTimeOffset.Now;
-      var game = new Game() {
+      var game = new Game()
+      {
         CreatedAt = time
       };
 

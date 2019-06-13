@@ -80,17 +80,45 @@ namespace IGDB
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-      JToken t = JToken.FromObject(value);
-
-      // Determine type of identity
-      if (t.Type != JTokenType.Null)
+      if (value != null)
       {
-        var children = t.Children();
-        var populated = children.FirstOrDefault(jt => jt.First.Type != JTokenType.Null && jt.Type == JTokenType.Property);
-
-        if (populated != null && populated.HasValues)
+        if (IsAssignableToGenericType(value.GetType(), typeof(IdentitiesOrValues<>)))
         {
-          populated.First.WriteTo(writer);
+          dynamic identitiesOrValues = value;
+
+          if (identitiesOrValues.Ids != null)
+          {
+            serializer.Serialize(writer, identitiesOrValues.Ids);
+          }
+          else if (identitiesOrValues.Values != null)
+          {
+            serializer.Serialize(writer, identitiesOrValues.Values);
+          }
+          else
+          {
+            serializer.Serialize(writer, null);
+          }
+        }
+        else if (IsAssignableToGenericType(value.GetType(), typeof(IdentityOrValue<>)))
+        {
+          dynamic identityOrValue = value;
+
+          if (identityOrValue.Id != null)
+          {
+            serializer.Serialize(writer, identityOrValue.Id);
+          }
+          else if (identityOrValue.Value != null)
+          {
+            serializer.Serialize(writer, identityOrValue.Value);
+          }
+          else
+          {
+            serializer.Serialize(writer, null);
+          }
+        }
+        else
+        {
+          serializer.Serialize(writer, null);
         }
       }
     }
