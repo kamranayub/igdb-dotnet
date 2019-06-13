@@ -82,39 +82,15 @@ namespace IGDB
     {
       if (value != null)
       {
+        dynamic identity = value;
+        
         if (IsAssignableToGenericType(value.GetType(), typeof(IdentitiesOrValues<>)))
         {
-          dynamic identitiesOrValues = value;
-
-          if (identitiesOrValues.Ids != null)
-          {
-            serializer.Serialize(writer, identitiesOrValues.Ids);
-          }
-          else if (identitiesOrValues.Values != null)
-          {
-            serializer.Serialize(writer, identitiesOrValues.Values);
-          }
-          else
-          {
-            serializer.Serialize(writer, null);
-          }
+          serializer.Serialize(writer, identity.Ids ?? identity.Values ?? null);
         }
         else if (IsAssignableToGenericType(value.GetType(), typeof(IdentityOrValue<>)))
         {
-          dynamic identityOrValue = value;
-
-          if (identityOrValue.Id != null)
-          {
-            serializer.Serialize(writer, identityOrValue.Id);
-          }
-          else if (identityOrValue.Value != null)
-          {
-            serializer.Serialize(writer, identityOrValue.Value);
-          }
-          else
-          {
-            serializer.Serialize(writer, null);
-          }
+          serializer.Serialize(writer, identity.Id ?? identity.Value ?? null);
         }
         else
         {
