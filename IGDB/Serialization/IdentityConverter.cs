@@ -33,11 +33,13 @@ namespace IGDB
 
         // Read first value in array
         var values = new List<object>();
+        bool areObjs = false;
         bool areInts = false;
         while (reader.Read() && reader.TokenType != JsonToken.EndArray)
         {
           if (reader.TokenType == JsonToken.StartObject)
           {
+            areObjs = true;
             var obj = serializer.Deserialize(reader, expandedType);
             // objects
             values.Add(obj);
@@ -45,21 +47,29 @@ namespace IGDB
           else if (reader.TokenType == JsonToken.Integer)
           {
             areInts = true;
+
+            // Exclude mixed IDs with expanded objects
+            // because those are empty pointers
+            if (areObjs) {
+              continue;
+            }
+
             // int ids
             values.Add(reader.Value);
           }
         }
-        if (areInts)
+
+        // Avoid mixed
+        if (areInts && !areObjs)
         {
           return Activator.CreateInstance(objectType, values.Cast<long>().ToArray());
         }
-        else
+        else if (areObjs)
         {
           var convertedValues = values.ToArray();
           var ctor = objectType.GetConstructor(new[] { typeof(object[]) });
           return ctor.Invoke(new[] { convertedValues });
         }
-
       }
       else if (IsAssignableToGenericType(objectType, typeof(IdentityOrValue<>)))
       {
