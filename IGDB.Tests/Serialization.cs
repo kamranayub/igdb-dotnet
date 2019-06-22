@@ -130,7 +130,7 @@ namespace IGDB.Tests
     public void Bug_Identity_Should_Handle_Mixed_Content()
     {
       var serialized = System.IO.File.ReadAllText("fixtures/bug-expanded-mixed-content.json");
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game[]>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
 
       Assert.True(true);
     }

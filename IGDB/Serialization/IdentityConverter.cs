@@ -33,43 +33,31 @@ namespace IGDB
 
         // Read first value in array
         var values = new List<object>();
-        bool areObjs = false;
-        bool areInts = false;
         while (reader.Read() && reader.TokenType != JsonToken.EndArray)
         {
           if (reader.TokenType == JsonToken.StartObject)
           {
-            areObjs = true;
             var obj = serializer.Deserialize(reader, expandedType);
             // objects
             values.Add(obj);
           }
           else if (reader.TokenType == JsonToken.Integer)
           {
-            areInts = true;
-
-            // Exclude mixed IDs with expanded objects
-            // because those are empty pointers
-            if (areObjs) {
-              continue;
-            }
-
             // int ids
             values.Add(reader.Value);
           }
         }
 
-        // Avoid mixed
-        if (areInts && !areObjs)
+        // If any are objects, it means the IDs should be ignored
+        if (values.All(v => v.GetType().IsAssignableFrom(typeof(long))))
         {
           return Activator.CreateInstance(objectType, values.Cast<long>().ToArray());
         }
-        else if (areObjs)
-        {
-          var convertedValues = values.ToArray();
-          var ctor = objectType.GetConstructor(new[] { typeof(object[]) });
-          return ctor.Invoke(new[] { convertedValues });
-        }
+
+        var objects = values.Where(v => !v.GetType().IsAssignableFrom(typeof(long)));
+        var convertedValues = objects.ToArray();
+        var ctor = objectType.GetConstructor(new[] { typeof(object[]) });
+        return ctor.Invoke(new[] { convertedValues });
       }
       else if (IsAssignableToGenericType(objectType, typeof(IdentityOrValue<>)))
       {
@@ -93,7 +81,7 @@ namespace IGDB
       if (value != null)
       {
         dynamic identity = value;
-        
+
         if (IsAssignableToGenericType(value.GetType(), typeof(IdentitiesOrValues<>)))
         {
           serializer.Serialize(writer, identity.Ids ?? identity.Values ?? null);
