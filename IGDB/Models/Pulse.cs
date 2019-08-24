@@ -2,11 +2,11 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Pulse : ITimestamps
+  public class Pulse : ITimestamps, IIdentifier
   {
     public string Author { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public string Image { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
     public IdentityOrValue<PulseSource> PulseSource { get; set; }

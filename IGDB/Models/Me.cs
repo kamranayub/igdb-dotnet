@@ -1,8 +1,8 @@
 namespace IGDB.Models
 {
-    public class Me
+    public class Me : IIdentifier
     {
-        public int? Id { get; set; }
+        public long? Id { get; set; }
         public string Username { get; set; }
         public string Slug { get; set; }
         public string Presentation { get; set; }

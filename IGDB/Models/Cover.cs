@@ -2,12 +2,12 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class Cover
+  public class Cover : IIdentifier
   {
     public bool? AlphaChannel { get; set; }
     public bool? Animated { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public int? Height { get; set; }
     public string ImageId { get; set; }
     public string Url { get; set; }

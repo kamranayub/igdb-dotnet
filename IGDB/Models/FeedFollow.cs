@@ -2,10 +2,10 @@ using System;
 
 namespace IGDB.Models
 {
-  public class FeedFollow : ITimestamps
+  public class FeedFollow : ITimestamps, IIdentifier
   {
     public DateTimeOffset? CreatedAt { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public FeedFollowCategory? Feed { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }

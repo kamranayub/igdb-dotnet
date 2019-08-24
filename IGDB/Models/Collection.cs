@@ -3,12 +3,12 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class Collection : ITimestamps
+  public class Collection : ITimestamps, IIdentifier
   {
     public DateTimeOffset? CreatedAt { get; set; }
 
     public IdentitiesOrValues<Game> Games { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
 
     public string Name { get; set; }
 

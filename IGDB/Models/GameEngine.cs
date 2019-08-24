@@ -2,7 +2,7 @@ using System;
 
 namespace IGDB.Models
 {
-  public class GameEngine : ITimestamps
+  public class GameEngine : ITimestamps, IIdentifier
   {
     public IdentitiesOrValues<Company> Companies { get; set; }
 
@@ -10,7 +10,7 @@ namespace IGDB.Models
 
     public string Description { get; set; }
     public IdentityOrValue<GameEngineLogo> Logo { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
 
     public string Name { get; set; }
 

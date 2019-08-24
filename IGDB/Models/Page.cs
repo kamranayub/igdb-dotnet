@@ -2,7 +2,7 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Page : ITimestamps
+  public class Page : ITimestamps, IIdentifier
   {
     public IdentityOrValue<PageBackground> Background { get; set; }
     public string Battlenet { get; set; }
@@ -14,7 +14,7 @@ namespace IGDB.Models
     public string Description { get; set; }
     public IdentityOrValue<Feed> Feed { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public string Name { get; set; }
     public string Origin { get; set; }
     public int? PageFollowsCount { get; set; }

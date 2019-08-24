@@ -1,8 +1,8 @@
 namespace IGDB.Models
 {
-  public class PulseUrl
+  public class PulseUrl : IIdentifier
   {
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public bool? Trusted { get; set; }
     public string Url { get; set; }
   }

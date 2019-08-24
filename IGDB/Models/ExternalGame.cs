@@ -2,14 +2,14 @@ using System;
 
 namespace IGDB.Models
 {
-  public class ExternalGame : ITimestamps
+  public class ExternalGame : ITimestamps, IIdentifier
   {
     public ExternalCategory? Category { get; set; }
 
     public DateTimeOffset? CreatedAt { get; set; }
 
     public IdentityOrValue<Game> Game { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
 
     public string Name { get; set; }
 

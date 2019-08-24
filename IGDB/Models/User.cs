@@ -1,7 +1,7 @@
 namespace IGDB.Models
 {
-  public class User
+  public class User : IIdentifier
   {
-    public int? Id { get; set; }
+    public long? Id { get; set; }
   }
 }

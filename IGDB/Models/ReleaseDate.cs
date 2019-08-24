@@ -3,13 +3,13 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class ReleaseDate : ITimestamps
+  public class ReleaseDate : ITimestamps, IIdentifier
   {
     public ReleaseDateCategory? Category { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public DateTimeOffset? Date { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public string Human { get; set; }
     [JsonProperty("m")]
     public int? Month { get; set; }

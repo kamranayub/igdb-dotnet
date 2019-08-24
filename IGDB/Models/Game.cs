@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class Game : ITimestamps
+  public class Game : ITimestamps, IIdentifier
   {
     public IdentitiesOrValues<AgeRating> AgeRatings { get; set; }
 
@@ -47,7 +47,7 @@ namespace IGDB.Models
 
     public int? Hypes { get; set; }
 
-    public int? Id { get; set; }
+    public long? Id { get; set; }
 
     public IdentitiesOrValues<InvolvedCompany> InvolvedCompanies { get; set; }
 
