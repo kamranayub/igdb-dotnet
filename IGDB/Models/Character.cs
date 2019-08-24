@@ -2,7 +2,7 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Character : ITimestamps
+  public class Character : ITimestamps, IIdentifier
   {
     public string[] Akas { get; set; }
     public string CountryName { get; set; }
@@ -10,7 +10,7 @@ namespace IGDB.Models
     public string Description { get; set; }
     public IdentitiesOrValues<Game> Games { get; set; }
     public Gender? Gender { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public IdentityOrValue<CharacterMugShot> MugShot { get; set; }
     public string Name { get; set; }
     public IdentitiesOrValues<People> People { get; set; }

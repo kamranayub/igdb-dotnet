@@ -2,14 +2,14 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Platform : ITimestamps
+  public class Platform : ITimestamps, IIdentifier
   {
     public string Abbreviation { get; set; }
     public string AlternativeName { get; set; }
     public PlatformCategory Category { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public int? Generation { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public string Name { get; set; }
     public IdentityOrValue<PlatformLogo> PlatformLogo { get; set; }
     public IdentityOrValue<ProductFamily> ProductFamily { get; set; }

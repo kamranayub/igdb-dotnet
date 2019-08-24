@@ -2,14 +2,14 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class PlatformVersion
+  public class PlatformVersion : IIdentifier
   {
     public IdentitiesOrValues<PlatformVersionCompany> Companies { get; set; }
     public string Connectivity { get; set; }
     [JsonProperty("cpu")]
     public string CPU { get; set; }
     public string Graphics { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public IdentityOrValue<PlatformVersionCompany> MainManufacturer { get; set; }
     public string Media { get; set; }
     public string Memory { get; set; }

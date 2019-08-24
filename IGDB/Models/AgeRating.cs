@@ -1,10 +1,10 @@
 namespace IGDB.Models
 {
-    public class AgeRating
+    public class AgeRating : IIdentifier
     {
         public AgeRatingCategory? Category { get; set; }
         public IdentitiesOrValues<AgeRatingContentDescription> ContentDescriptions { get; set; }
-        public int? Id { get; set; }
+        public long? Id { get; set; }
         public AgeRatingTitle? Rating { get; set; }
         public string RatingCoverUrl { get; set; }
         public string Synopsis { get; set; }

@@ -2,11 +2,11 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Franchise : ITimestamps
+  public class Franchise : ITimestamps, IIdentifier
   {
     public DateTimeOffset? CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public IdentitiesOrValues<Game> Games { get; set; }
     public string Name { get; set; }
     public string Slug { get; set; }

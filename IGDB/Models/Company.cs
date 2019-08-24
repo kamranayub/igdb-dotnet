@@ -2,7 +2,7 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Company : ITimestamps
+  public class Company : ITimestamps, IIdentifier
   {
     public DateTimeOffset? ChangeDate { get; set; }
     public ChangeDateCategory ChangeDateCategory { get; set; }
@@ -18,7 +18,7 @@ namespace IGDB.Models
     public string Description { get; set; }
 
     public IdentitiesOrValues<Game> Developed { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
 
     public IdentityOrValue<CompanyLogo> Logo { get; set; }
 

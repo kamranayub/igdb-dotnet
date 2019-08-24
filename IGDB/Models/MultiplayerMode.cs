@@ -2,14 +2,14 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class MultiplayerMode
+  public class MultiplayerMode : IIdentifier
   {
     [JsonProperty("campaigncoop")]
     public bool? CampaignCoop { get; set; }
     [JsonProperty("dropin")]
     public bool? DropIn { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     [JsonProperty("lancoop")]
     public bool? LanCoop { get; set; }
     [JsonProperty("offlinecoop")]

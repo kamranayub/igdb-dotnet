@@ -2,7 +2,7 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Achievement : ITimestamps
+  public class Achievement : ITimestamps, IIdentifier
   {
     public IdentityOrValue<AchievementIcon> AchievementIcon { get; set; }
     public AchievementCategory Category { get; set; }
@@ -10,7 +10,7 @@ namespace IGDB.Models
     public string Description { get; set; }
     public string ExternalId { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
-    public int? Id { get; set; }
+    public long? Id { get; set; }
     public AchievementLanguage Language { get; set; }
     public string Name { get; set; }
     public double? OwnersPercentage { get; set; }
