@@ -40,7 +40,7 @@ namespace IGDB
     /// </summary>
     /// <returns></returns>
     [Get("/api_status")]
-    Task<ApiStatus> GetApiStatus();
+    Task<ApiStatus[]> GetApiStatus();
   }
 
   public static class Client
