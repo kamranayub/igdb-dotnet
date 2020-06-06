@@ -65,7 +65,7 @@ namespace IGDB.Tests
 
       Assert.NotNull(game.Cover);
       Assert.NotNull(game.Cover.Id);
-      Assert.Equal(65441, game.Cover.Id.Value);
+      Assert.Equal(96744, game.Cover.Id.Value);
     }
 
     [Fact]
