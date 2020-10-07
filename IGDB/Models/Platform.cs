@@ -12,7 +12,7 @@ namespace IGDB.Models
     public long? Id { get; set; }
     public string Name { get; set; }
     public IdentityOrValue<PlatformLogo> PlatformLogo { get; set; }
-    public IdentityOrValue<ProductFamily> ProductFamily { get; set; }
+    public IdentityOrValue<PlatformFamily> PlatformFamily { get; set; }
     public string Slug { get; set; }
     public string Summary { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }

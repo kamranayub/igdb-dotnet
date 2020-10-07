@@ -1,8 +1,8 @@
 namespace IGDB.Models
 {
-  public class ProductFamily : IIdentifier
+  public class PlatformFamily : IIdentifier
   {
-    public long? Id { get; set; }
+    public string Checksum { get; set; }
     public string Name { get; set; }
     public string Slug { get; set; }
   }

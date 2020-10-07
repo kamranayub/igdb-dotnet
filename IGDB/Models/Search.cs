@@ -13,7 +13,6 @@ namespace IGDB.Models
     public string Name { get; set; }
     public IdentityOrValue<Person> Person { get; set; }
     public IdentityOrValue<Platform> Platform { get; set; }
-    public double Popularity { get; set; }
     public DateTimeOffset? PublishedAt { get; set; }
     public IdentityOrValue<Theme> Theme { get; set; }
   }

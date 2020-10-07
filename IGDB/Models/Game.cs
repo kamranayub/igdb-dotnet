@@ -63,10 +63,6 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<PlayerPerspective> PlayerPerspectives { get; set; }
 
-    public double? Popularity { get; set; }
-
-    public int? PulseCount { get; set; }
-
     public double? Rating { get; set; }
 
     public int? RatingCount { get; set; }
@@ -90,8 +86,6 @@ namespace IGDB.Models
     public int[] Tags { get; set; }
 
     public IdentitiesOrValues<Theme> Themes { get; set; }
-
-    public IdentityOrValue<TimeToBeat> TimeToBeat { get; set; }
 
     public double? TotalRating { get; set; }
 
