@@ -61,6 +61,7 @@ namespace IGDB
     /// <returns></returns>
     public static IGDBApi Create(string clientId, string clientSecret, ITokenManager tokenManager)
     {
+      // TODO: Provide custom IRequester to handle when API returns expired token
       var api = new RestClient("https://api.igdb.com/v4", async (request, cancellationToken) =>
       {
         if (tokenManager != null)
