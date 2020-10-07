@@ -51,7 +51,7 @@ namespace IGDB
     public static IGDBApi Create(string clientId, string clientSecret)
     {
       return Create(clientId, clientSecret,
-        new InMemoryTokenManager(TwitchAuthClient.Create(clientId, clientSecret)));
+        new InMemoryTokenManager(new TwitchOAuthClient(clientId, clientSecret)));
     }
 
     /// <summary>
@@ -66,8 +66,13 @@ namespace IGDB
       {
         if (tokenManager != null)
         {
-          var clientToken = await tokenManager.AcquireTokenAsync();
-          request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue($"Bearer {clientToken}");
+          var twitchToken = await tokenManager.AcquireTokenAsync();
+
+          if (twitchToken?.AccessToken != null)
+          {
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
+              "Bearer", twitchToken.AccessToken);
+          }
         }
       })
       {

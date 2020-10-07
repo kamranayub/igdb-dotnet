@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using RestEase;
 
 namespace IGDB
@@ -24,25 +26,39 @@ namespace IGDB
   [Header("Accept", "application/json")]
   public interface TwitchOAuthAPI
   {
-    string ClientId { get; set; }
-    string ClientSecret { get; set; }
-
     [Post("/oauth2/token")]
     Task<TwitchAccessToken> GetOAuth2Token([Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, string> data);
   }
 
-  /// <summary>
-  /// Simple Twitch Authentication client to retrieve a token
-  /// See: https://dev.twitch.tv/docs/authentication/getting-tokens-oauth#oauth-client-credentials-flow
-  /// </summary>
-  public static class TwitchAuthClient
+  public class TwitchOAuthClient
   {
-    public static TwitchOAuthAPI Create(string clientId, string clientSecret)
+    private readonly string _clientId;
+    private readonly string _clientSecret;
+    private readonly TwitchOAuthAPI _api;
+
+    public TwitchOAuthClient(string clientId, string clientSecret)
     {
-      var api = RestClient.For<TwitchOAuthAPI>("https://id.twitch.tv");
-      api.ClientId = clientId;
-      api.ClientSecret = clientSecret;
-      return api;
+      _clientId = clientId;
+      _clientSecret = clientSecret;
+      _api = new RestClient("https://id.twitch.tv")
+      {
+        JsonSerializerSettings = new JsonSerializerSettings()
+        {
+          ContractResolver = new DefaultContractResolver()
+          {
+            NamingStrategy = new SnakeCaseNamingStrategy()
+          }
+        }
+      }.For<TwitchOAuthAPI>();
+    }
+
+    public Task<TwitchAccessToken> GetClientCredentialTokenAsync()
+    {
+      return _api.GetOAuth2Token(new Dictionary<string, string>() {
+        {"client_id", _clientId},
+        {"client_secret", _clientSecret},
+        {"grant_type", "client_credentials"}
+      });
     }
   }
 
@@ -64,9 +80,9 @@ namespace IGDB
   {
     private static TwitchAccessToken CurrentToken { get; set; }
     private static DateTimeOffset CurrentTokenUpdatedAt { get; set; }
-    private readonly TwitchOAuthAPI _twitchClient;
+    private readonly TwitchOAuthClient _twitchClient;
 
-    public InMemoryTokenManager(TwitchOAuthAPI twitchClient)
+    public InMemoryTokenManager(TwitchOAuthClient twitchClient)
     {
       _twitchClient = twitchClient;
     }
@@ -83,11 +99,7 @@ namespace IGDB
 
     public async Task<TwitchAccessToken> RefreshTokenAsync()
     {
-      var accessToken = await _twitchClient.GetOAuth2Token(new Dictionary<string, string>() {
-        {"client_id", _twitchClient.ClientId},
-        {"client_secret", _twitchClient.ClientSecret},
-        {"grant_type", "client_credentials"}
-      });
+      var accessToken = await _twitchClient.GetClientCredentialTokenAsync();
 
       CurrentToken = accessToken;
       CurrentTokenUpdatedAt = DateTimeOffset.UtcNow;
