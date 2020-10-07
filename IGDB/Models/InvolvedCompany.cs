@@ -2,8 +2,9 @@ using System;
 
 namespace IGDB.Models
 {
-  public class InvolvedCompany : ITimestamps, IIdentifier
+  public class InvolvedCompany : ITimestamps, IIdentifier, IHasChecksum
   {
+    public string Checksum { get; set; }
     public IdentityOrValue<Company> Company { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public bool? Developer { get; set; }

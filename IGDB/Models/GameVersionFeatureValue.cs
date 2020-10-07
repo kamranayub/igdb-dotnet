@@ -1,9 +1,11 @@
 namespace IGDB.Models
 {
-  public class GameVersionFeatureValue : IIdentifier
+  public class GameVersionFeatureValue : IIdentifier, IHasChecksum
   {
+    
+    public string Checksum { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
-    public IdentityOrValue<GameVersionFeature> Feature { get; set; }
+    public IdentityOrValue<GameVersionFeature> GameFeature { get; set; }
     public long? Id { get; set; }
     public IncludedFeature? IncludedFeature { get; set; }
     public string Note { get; set; }

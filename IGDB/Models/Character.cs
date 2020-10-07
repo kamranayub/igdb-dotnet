@@ -2,9 +2,10 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Character : ITimestamps, IIdentifier
+  public class Character : ITimestamps, IIdentifier, IHasChecksum
   {
     public string[] Akas { get; set; }
+    public string Checksum { get; set; }
     public string CountryName { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public string Description { get; set; }
@@ -13,7 +14,6 @@ namespace IGDB.Models
     public long? Id { get; set; }
     public IdentityOrValue<CharacterMugShot> MugShot { get; set; }
     public string Name { get; set; }
-    public IdentitiesOrValues<People> People { get; set; }
     public string Slug { get; set; }
     public Species? Species { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }

@@ -2,8 +2,10 @@ using System;
 
 namespace IGDB.Models
 {
-  public class GameVersion : ITimestamps, IIdentifier
+  public class GameVersion : ITimestamps, IIdentifier, IHasChecksum
   {
+    
+    public string Checksum { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public IdentitiesOrValues<GameVersionFeature> Features { get; set; }
     public IdentityOrValue<Game> Game { get; set; }

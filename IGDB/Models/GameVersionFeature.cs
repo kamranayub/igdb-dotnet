@@ -1,8 +1,9 @@
 namespace IGDB.Models
 {
-  public class GameVersionFeature : IIdentifier
+  public class GameVersionFeature : IIdentifier, IHasChecksum
   {
     public GameVersionFeatureCategory Category { get; set; }
+    public string Checksum { get; set; }
     public string Description { get; set; }
     public long? Id { get; set; }
     public int? Position { get; set; }

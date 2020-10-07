@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class Game : ITimestamps, IIdentifier
+  public class Game : ITimestamps, IIdentifier, IHasChecksum
   {
     public IdentitiesOrValues<AgeRating> AgeRatings { get; set; }
 
@@ -18,6 +18,8 @@ namespace IGDB.Models
     public IdentitiesOrValues<Game> Bundles { get; set; }
 
     public Category? Category { get; set; }
+
+    public string Checksum { get; set; }
 
     public IdentityOrValue<Collection> Collection { get; set; }
 
@@ -110,7 +112,10 @@ namespace IGDB.Models
     DlcAddon = 1,
     Expansion = 2,
     Bundle = 3,
-    StandaloneExpansion = 4
+    StandaloneExpansion = 4,
+    Mod = 5,
+    Epuisode = 6,
+    Season = 7
   }
 
   public enum GameStatus
@@ -120,6 +125,7 @@ namespace IGDB.Models
     Beta = 3,
     EarlyAccess = 4,
     Offline = 5,
-    Cancelled = 6
+    Cancelled = 6,
+    Rumored = 7
   }
 }

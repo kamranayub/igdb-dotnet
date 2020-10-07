@@ -2,6 +2,6 @@ namespace IGDB.Models
 {
   public interface IIdentifier
   {
-    string Checksum { get; set; }
+    long? Id { get; set; }
   }
 }

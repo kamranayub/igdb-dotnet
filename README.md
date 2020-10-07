@@ -109,9 +109,12 @@ var coverSmall = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: Ima
 
 ### Local Development
 
-Add environment variable:
+Add environment variables:
 
-    export IGDB_API_KEY=<your api key>
+    export IGDB_CLIENT_ID=[your OAuth app client ID]
+    export IGDB_CLIENT_SECRET=[your OAuth app client secret]
+
+These are found in your [Twitch Developer Console](https://dev.twitch.tv/console/apps).
 
 You don't need this to be defined globally but it does need to be in scope while running `dotnet test`.
 
