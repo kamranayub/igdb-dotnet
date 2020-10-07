@@ -68,7 +68,8 @@ namespace IGDB
       client.JsonSerializerSettings = DefaultJsonSerializerSettings;
 
       var api = client.For<IGDBApi>();
-      api.ApiKey = apiKey;
+      api.ClientId = clientId;
+      api.ClientSecret = clientSecret;
       return api;
     }
 
