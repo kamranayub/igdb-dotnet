@@ -13,7 +13,10 @@ namespace IGDB.Tests
 
     public Games()
     {
-      _api = IGDB.Client.Create(Environment.GetEnvironmentVariable("IGDB_API_KEY"));
+      _api = IGDB.Client.Create(
+        Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
+        Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
+      );
     }
 
     [Fact]

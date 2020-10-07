@@ -112,15 +112,6 @@ namespace IGDB
       public const string Search = "search";
       public const string Themes = "themes";
       public const string Websites = "websites";
-
-      public static class Private
-      {
-        public const string Follows = "private/follows";
-        public const string Me = "private/me";
-        public const string Rates = "private/rates";
-        public const string Reviews = "private/reviews";
-        public const string ReviewVideos = "private/review_videos";
-      }
     }
   }
 }
