@@ -15,8 +15,8 @@ namespace IGDB.Tests
       var game = new Game();
       game.ParentGame = new IdentityOrValue<Game>(3);
 
-      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var serialized = JsonConvert.SerializeObject(game, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.NotNull(deserialized.ParentGame);
       Assert.NotNull(deserialized.ParentGame.Id);
@@ -29,8 +29,8 @@ namespace IGDB.Tests
       var game = new Game();
       game.ParentGame = new IdentityOrValue<Game>(new Game() { Name = "Test" });
 
-      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var serialized = JsonConvert.SerializeObject(game, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.NotNull(deserialized.ParentGame);
       Assert.NotNull(deserialized.ParentGame.Value.Name);
@@ -43,8 +43,8 @@ namespace IGDB.Tests
       var game = new Game();
       game.Genres = new IdentitiesOrValues<Genre>(new long[] { 0, 1, 2, 3 });
 
-      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var serialized = JsonConvert.SerializeObject(game, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.NotNull(deserialized.Genres);
       Assert.NotNull(deserialized.Genres.Ids);
@@ -63,8 +63,8 @@ namespace IGDB.Tests
       };
       game.ExternalGames = new IdentitiesOrValues<ExternalGame>(externalGames);
 
-      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var serialized = JsonConvert.SerializeObject(game, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.NotNull(deserialized.ExternalGames);
       Assert.NotNull(deserialized.ExternalGames.Values);
@@ -82,8 +82,8 @@ namespace IGDB.Tests
       };
       game.Genres = new IdentitiesOrValues<Genre>(genres);
 
-      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var serialized = JsonConvert.SerializeObject(game, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.NotNull(deserialized.Genres);
       Assert.NotNull(deserialized.Genres.Values);
@@ -102,8 +102,8 @@ namespace IGDB.Tests
       };
       game.ExternalGames = new IdentitiesOrValues<ExternalGame>(externalGames);
 
-      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var serialized = JsonConvert.SerializeObject(game, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.NotNull(deserialized.ExternalGames);
       Assert.NotNull(deserialized.ExternalGames.Values);
@@ -120,8 +120,8 @@ namespace IGDB.Tests
         CreatedAt = time
       };
 
-      var serialized = JsonConvert.SerializeObject(game, IGDB.Client.DefaultJsonSerializerSettings);
-      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var serialized = JsonConvert.SerializeObject(game, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.Equal(time.ToUnixTimeSeconds(), deserialized.CreatedAt.Value.ToUnixTimeSeconds());
     }
@@ -130,7 +130,7 @@ namespace IGDB.Tests
     public void Bug_Identity_Should_Handle_Mixed_Content()
     {
       var serialized = System.IO.File.ReadAllText("fixtures/bug-expanded-mixed-content.json");
-      var deserialized = JsonConvert.DeserializeObject<Game[]>(serialized, IGDB.Client.DefaultJsonSerializerSettings);
+      var deserialized = JsonConvert.DeserializeObject<Game[]>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
 
       Assert.True(true);
     }

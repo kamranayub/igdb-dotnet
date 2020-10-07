@@ -18,12 +18,10 @@ namespace IGDB
     [Header("client-id")]
     string ClientId { get; set; }
 
-    string ClientSecret { get; set; }
-
     /// <summary>
-    /// Queries a standard IGDB endpoint with an APIcalypse query. See endpoints in <see cref="IGDB.Client.Endpoints" />.
+    /// Queries a standard IGDB endpoint with an APIcalypse query. See endpoints in <see cref="IGDB.IGDBClient.Endpoints" />.
     /// </summary>
-    /// <param name="endpoint">The IGDB endpoint name to query, see <see cref="IGDB.Client.Endpoints" /></param>
+    /// <param name="endpoint">The IGDB endpoint name to query, see <see cref="IGDB.IGDBClient.Endpoints" /></param>
     /// <param name="query">The APIcalypse query to send</param>
     /// <typeparam name="T">The IGDB.Models.* entity to deserialize the response for.</typeparam>
     /// <returns>Array of IGDB models of the specified type</returns>
@@ -31,9 +29,8 @@ namespace IGDB
     Task<T[]> QueryAsync<T>([Path] string endpoint, [Body] string query = null);
   }
 
-  public static class Client
+  public static class IGDBClient
   {
-
     public static JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings()
     {
       Converters = new List<JsonConverter>() {
@@ -47,29 +44,35 @@ namespace IGDB
     };
 
     /// <summary>
-    /// Create a default IGDB API client with specified API key
+    /// Create a IGDB API client based on a custom-created RestEase client. Adds required
+    /// JSON serializer settings on top of any existing settings. Uses default in-memory access token management.
     /// </summary>
-    /// <param name="apiKey">Your private IGDB API key. Keep it secret, keep it safe!</param>
     /// <returns></returns>
     public static IGDBApi Create(string clientId, string clientSecret)
     {
-      return Create(clientId, clientSecret, new RestClient("https://api.igdb.com/v4"));
+      return Create(clientId, clientSecret,
+        new InMemoryTokenManager(TwitchAuthClient.Create(clientId, clientSecret)));
     }
 
     /// <summary>
     /// Create a IGDB API client based on a custom-created RestEase client. Adds required
     /// JSON serializer settings on top of any existing settings.
     /// </summary>
-    /// <param name="apiKey">Your private IGDB API key. Keep it secret, keep it safe!</param>
-    /// <param name="client">A custom RestEase.RestClient</param>
     /// <returns></returns>
-    public static IGDBApi Create(string clientId, string clientSecret, RestClient client)
+    public static IGDBApi Create(string clientId, string clientSecret, ITokenManager tokenManager)
     {
-      client.JsonSerializerSettings = DefaultJsonSerializerSettings;
-
-      var api = client.For<IGDBApi>();
+      var api = new RestClient("https://api.igdb.com/v4", async (request, cancellationToken) =>
+      {
+        if (tokenManager != null)
+        {
+          var clientToken = await tokenManager.AcquireTokenAsync();
+          request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue($"Bearer {clientToken}");
+        }
+      })
+      {
+        JsonSerializerSettings = DefaultJsonSerializerSettings
+      }.For<IGDBApi>();
       api.ClientId = clientId;
-      api.ClientSecret = clientSecret;
       return api;
     }
 
