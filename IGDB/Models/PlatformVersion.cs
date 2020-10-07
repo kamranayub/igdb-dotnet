@@ -2,8 +2,9 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class PlatformVersion : IIdentifier
+  public class PlatformVersion : IIdentifier, IHasChecksum
   {
+    public string Checksum { get; set; }
     public IdentitiesOrValues<PlatformVersionCompany> Companies { get; set; }
     public string Connectivity { get; set; }
     [JsonProperty("cpu")]

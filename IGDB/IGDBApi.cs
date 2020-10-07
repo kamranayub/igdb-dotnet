@@ -15,8 +15,10 @@ namespace IGDB
     /// Your secret, private IGDB API token
     /// </summary>
     /// <value></value>
-    [Header("user-key")]
-    string ApiKey { get; set; }
+    [Header("client-id")]
+    string ClientId { get; set; }
+
+    string ClientSecret { get; set; }
 
     /// <summary>
     /// Queries a standard IGDB endpoint with an APIcalypse query. See endpoints in <see cref="IGDB.Client.Endpoints" />.
@@ -26,21 +28,7 @@ namespace IGDB
     /// <typeparam name="T">The IGDB.Models.* entity to deserialize the response for.</typeparam>
     /// <returns>Array of IGDB models of the specified type</returns>
     [Post("/{endpoint}")]
-    Task<T[]> QueryAsync<T>([Path]string endpoint, [Body] string query = null);
-
-    /// <summary>
-    /// For authenticated requests, get authenticated user info
-    /// </summary>
-    /// <returns></returns>
-    [Get("/" + Client.Endpoints.Private.Me)]
-    Task<Me> GetPrivateMe();
-
-    /// <summary>
-    /// Returns your API key status with usage information
-    /// </summary>
-    /// <returns></returns>
-    [Get("/api_status")]
-    Task<ApiStatus[]> GetApiStatus();
+    Task<T[]> QueryAsync<T>([Path] string endpoint, [Body] string query = null);
   }
 
   public static class Client
@@ -63,9 +51,9 @@ namespace IGDB
     /// </summary>
     /// <param name="apiKey">Your private IGDB API key. Keep it secret, keep it safe!</param>
     /// <returns></returns>
-    public static IGDBApi Create(string apiKey)
+    public static IGDBApi Create(string clientId, string clientSecret)
     {
-      return Create(apiKey, new RestClient("https://api.igdb.com/v4"));
+      return Create(clientId, clientSecret, new RestClient("https://api.igdb.com/v4"));
     }
 
     /// <summary>
@@ -75,7 +63,7 @@ namespace IGDB
     /// <param name="apiKey">Your private IGDB API key. Keep it secret, keep it safe!</param>
     /// <param name="client">A custom RestEase.RestClient</param>
     /// <returns></returns>
-    public static IGDBApi Create(string apiKey, RestClient client)
+    public static IGDBApi Create(string clientId, string clientSecret, RestClient client)
     {
       client.JsonSerializerSettings = DefaultJsonSerializerSettings;
 

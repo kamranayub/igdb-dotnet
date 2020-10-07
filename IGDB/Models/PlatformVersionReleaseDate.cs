@@ -3,9 +3,10 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class PlatformVersionReleaseDate : ITimestamps, IIdentifier
+  public class PlatformVersionReleaseDate : ITimestamps, IIdentifier, IHasChecksum
   {
     public ReleaseDateCategory? Category { get; set; }
+    public string Checksum { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public DateTimeOffset? Date { get; set; }
     public string Human { get; set; }
