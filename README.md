@@ -21,13 +21,13 @@ via [Nuget](https://www.nuget.org/packages/IGDB/)
 
 ### Quickstart
 
-Uses [RestEase](https://github.com/canton7/RestEase) so you can easily call the API methods. Since IGDB uses APIcalypse query language, you will need to pass the query as a string. *TODO: Create a query builder.*
+Uses [RestEase](https://github.com/canton7/RestEase) so you can easily call the API methods. Since IGDB uses APIcalypse query language, you will need to pass the query as a string. _TODO: Create a query builder._
 
 Endpoints can be passed using the constants in `IGDB.IGDBClient.Endpoints` or as a custom string.
 
 Models are domain objects found in `IGDB.Models` and correspond directly to the [Endpoints documentation](https://api-docs.igdb.com/#endpoints).
 
-Some fields can be [expanded](https://api-docs.igdb.com/#expander) which is handled via the `IdentityOrValue` and `IdentitiesOrValues` wrapper. 
+Some fields can be [expanded](https://api-docs.igdb.com/#expander) which is handled via the `IdentityOrValue` and `IdentitiesOrValues` wrapper.
 
 The IGDB API uses the Twitch Developer program to power its API so it requires an OAuth client app ID and secret, which you can find in your [Developer Portal](https://dev.twitch.tv/console/apps). Passing these to the `IGDBClient.Create` method will handle the OAuth bearer token management for you (see _Custom Token Management_ below for details).
 
@@ -37,26 +37,26 @@ See below for an example:
 using IGDB;
 using IGDB.Models;
 
-var igdb = IGDB.IGDBClient.Create(
+var igdb = new IGDBClient(
   // Found in Twitch Developer portal for your app
   Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
   Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
 );
 
 // Simple fields
-var games = await igdb.QueryAsync<Game>(IGDB.IGDBClient.Endpoints.Games, query: "fields id,name; where id = 4;");
+var games = await igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query: "fields id,name; where id = 4;");
 var game = games.First();
 game.Id; // 4
 game.Name; // Thief
 
 // Reference fields
-var games = await igdb.QueryAsync<Game>(IGDB.IGDBClient.Endpoints.Games, query: "fields id,name,cover; where id = 4;");
+var games = await igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query: "fields id,name,cover; where id = 4;");
 var game = games.First();
 game.Cover.Id.HasValue; // true
 game.Cover.Id.Value; // 65441
 
 // Expanded fields
-var games = await igdb.QueryAsync<Game>(IGDB.IGDBClient.Endpoints.Games, query: "fields id,name,cover.*; where id = 4;");
+var games = await igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, query: "fields id,name,cover.*; where id = 4;");
 var game = games.First();
 
 // Id will not be populated but the full Cover object will be
@@ -67,11 +67,13 @@ game.Cover.Value.Height;
 
 ### Custom Token Management
 
-By default this client will request a OAuth bearer token on your behalf that is valid for 60 days and will store it statically **in memory**. See `TokenManagement.cs` for the default implementation.
+By default this client will request a OAuth bearer token on your behalf that is valid for 60 days and will store it statically **in memory**. If an invalid token is used and a 401 response is received, it will automatically acquire a new token and retry the request. See `TokenManagement.cs` for the default implementation.
 
 To customize this behavior, such as storing the bearer token in persistent storage like SQL or NoSQL, you will have to pass your own `ITokenStore` implementation.
 
 ```c#
+using IGDB;
+
 class CustomTokenStore : ITokenStore {
 
   Task<TwitchAccessToken> GetTokenAsync() {
@@ -89,7 +91,7 @@ class CustomTokenStore : ITokenStore {
 }
 
 // Create an IGDB API client, passing custom token store
-var api = IGDB.IGDBClient.Create(clientId, clientSecret, new CustomTokenStore());
+var api = new IGDBClient(clientId, clientSecret, new CustomTokenStore());
 ```
 
 - `GetTokenAsync` - Gets a token

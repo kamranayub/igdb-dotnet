@@ -76,7 +76,7 @@ namespace IGDB
     }
   }
 
-  public class InMemoryTokenStore : ITokenStore
+  public sealed class InMemoryTokenStore : ITokenStore
   {
 
     private static TwitchAccessToken CurrentToken { get; set; }

@@ -29,8 +29,11 @@ namespace IGDB
     Task<T[]> QueryAsync<T>([Path] string endpoint, [Body] string query = null);
   }
 
-  public static class IGDBClient
+  public sealed class IGDBClient
   {
+    private readonly IGDBApi _api;
+    private readonly TokenManager _tokenManager;
+
     public static JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings()
     {
       Converters = new List<JsonConverter>() {
@@ -48,10 +51,10 @@ namespace IGDB
     /// JSON serializer settings on top of any existing settings. Uses default in-memory access token management.
     /// </summary>
     /// <returns></returns>
-    public static IGDBApi Create(string clientId, string clientSecret)
+    public IGDBClient(string clientId, string clientSecret) :
+     this(clientId, clientSecret,
+        new InMemoryTokenStore())
     {
-      return Create(clientId, clientSecret,
-        new InMemoryTokenStore());
     }
 
     /// <summary>
@@ -59,7 +62,7 @@ namespace IGDB
     /// JSON serializer settings on top of any existing settings.
     /// </summary>
     /// <returns></returns>
-    public static IGDBApi Create(string clientId, string clientSecret, ITokenStore tokenStore)
+    public IGDBClient(string clientId, string clientSecret, ITokenStore tokenStore)
     {
       if (tokenStore == null)
       {
@@ -67,12 +70,11 @@ namespace IGDB
           "A ITokenStore is required. Pass InMemoryTokenStore if you do not have a custom store implemented.");
       }
 
-      var tokenManager = new TokenManager(tokenStore, new TwitchOAuthClient(clientId, clientSecret));
+      _tokenManager = new TokenManager(tokenStore, new TwitchOAuthClient(clientId, clientSecret));
 
-      // TODO: Provide custom IRequester to handle when API returns expired token
       var api = new RestClient("https://api.igdb.com/v4", async (request, cancellationToken) =>
       {
-        var twitchToken = await tokenManager.AcquireTokenAsync();
+        var twitchToken = await _tokenManager.AcquireTokenAsync();
 
         if (twitchToken?.AccessToken != null)
         {
@@ -85,7 +87,40 @@ namespace IGDB
         JsonSerializerSettings = DefaultJsonSerializerSettings
       }.For<IGDBApi>();
       api.ClientId = clientId;
-      return api;
+      _api = api;
+    }
+
+    public async Task<T[]> QueryAsync<T>(string endpoint, string query = null)
+    {
+      try
+      {
+        return await _api.QueryAsync<T>(endpoint, query);
+      }
+      catch (ApiException apiEx)
+      {
+        // Acquire new token and retry request (once)
+        if (IsInvalidTokenResponse(apiEx))
+        {
+          await _tokenManager.RefreshTokenAsync();
+
+          return await _api.QueryAsync<T>(endpoint, query);
+        }
+
+        // Pass up any other exceptions
+        throw apiEx;
+      }
+    }
+
+    /// <summary>
+    /// Whether or not an ApiException represents an invalid_token response.
+    /// </summary>
+    /// <param name="ex"></param>
+    /// <remarks>See: https://dev.twitch.tv/docs/authentication</remarks>
+    /// <returns></returns>
+    public static bool IsInvalidTokenResponse(ApiException ex)
+    {
+      return ex.StatusCode == System.Net.HttpStatusCode.Unauthorized &&
+        ex.Headers.WwwAuthenticate.ToString().Contains("invalid_token");
     }
 
     public static class Endpoints

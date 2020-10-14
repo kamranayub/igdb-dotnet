@@ -9,11 +9,11 @@ namespace IGDB.Tests
 {
   public class Games
   {
-    IGDBApi _api;
+    IGDBClient _api;
 
     public Games()
     {
-      _api = IGDB.IGDBClient.Create(
+      _api = new IGDB.IGDBClient(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
       );
