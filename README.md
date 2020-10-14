@@ -4,6 +4,10 @@
 
 A wrapper around the [IGDBv4 API](https://api-docs.igdb.com) using .NET Core (compatible with .NET Standard 2.0+). Note, IGDBv3 is now deprecated and no longer supported so previous versions of this library (1.x) are no longer supported.
 
+## Where is this being used?
+
+I built this library primarily for [Keep Track of My Games](https://keeptrackofmygames.com), an app to help organize and track your game collection. That means I use this library in production and I'm motivated to keep it up-to-date and fix issues.
+
 ## Usage
 
 ### Install
