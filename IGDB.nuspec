@@ -36,16 +36,16 @@
             The description can be used in package manager UI. Note that the
             nuget.org gallery uses information you add in the portal. 
         -->
-        <description>IGDB APIv3 games database .NET Standard 2.0 wrapper</description>
+        <description>IGDB APIv4 games database .NET Standard 2.0 wrapper</description>
 
         <!-- Copyright information -->
-        <copyright>Copyright 2019 Kamran Ayub</copyright>
+        <copyright>Copyright 2020 Kamran Ayub</copyright>
 
         <!-- Tags appear in the gallery and can be used for tag searches -->
         <tags>igdb dotnet games giantbomb gog steam origin</tags>
         
         <dependencies>
-          <dependency id="RestEase" version="1.4.9" />
+          <dependency id="RestEase" version="1.5.0" />
         </dependencies>
     </metadata>
     <files>
