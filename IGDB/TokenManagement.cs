@@ -7,20 +7,19 @@ using RestEase;
 
 namespace IGDB
 {
-  public interface ITokenManager
+  public interface ITokenStore
   {
-
     /// <summary>
-    /// Returns the current non-expired token or retrieves a new one if missing or expired
+    /// Returns the current token from storage
     /// </summary>
     /// <returns></returns>
-    Task<TwitchAccessToken> AcquireTokenAsync();
+    Task<TwitchAccessToken> GetTokenAsync();
 
     /// <summary>
-    /// Forces the expiration of the current token and acquires a new one
+    /// Stores the current token to storage
     /// </summary>
     /// <returns></returns>
-    Task<TwitchAccessToken> RefreshTokenAsync();
+    Task<TwitchAccessToken> StoreTokenAsync(TwitchAccessToken token);
   }
 
   [Header("Accept", "application/json")]
@@ -69,29 +68,48 @@ namespace IGDB
     public double ExpiresIn { get; set; }
     public string[] Scope { get; set; }
     public string TokenType { get; set; }
+    public DateTimeOffset TokenAcquiredAt { get; set; }
 
-    public bool HasTokenExpired(DateTimeOffset utcAcquiredAt)
+    public bool HasTokenExpired()
     {
-      return (DateTimeOffset.UtcNow - utcAcquiredAt).TotalSeconds > ExpiresIn;
+      return (DateTimeOffset.UtcNow - TokenAcquiredAt).TotalSeconds > ExpiresIn;
     }
   }
 
-  public class InMemoryTokenManager : ITokenManager
+  public class InMemoryTokenStore : ITokenStore
   {
-    private static TwitchAccessToken CurrentToken { get; set; }
-    private static DateTimeOffset CurrentTokenUpdatedAt { get; set; }
-    private readonly TwitchOAuthClient _twitchClient;
 
-    public InMemoryTokenManager(TwitchOAuthClient twitchClient)
+    private static TwitchAccessToken CurrentToken { get; set; }
+
+    public async Task<TwitchAccessToken> StoreTokenAsync(TwitchAccessToken token)
     {
+      CurrentToken = token;
+      return token;
+    }
+
+    public Task<TwitchAccessToken> GetTokenAsync()
+    {
+      return Task.FromResult(CurrentToken);
+    }
+  }
+
+  internal class TokenManager
+  {
+    private readonly TwitchOAuthClient _twitchClient;
+    private readonly ITokenStore _tokenStore;
+
+    public TokenManager(ITokenStore tokenStore, TwitchOAuthClient twitchClient)
+    {
+      _tokenStore = tokenStore;
       _twitchClient = twitchClient;
     }
 
     public async Task<TwitchAccessToken> AcquireTokenAsync()
     {
-      if (CurrentToken?.HasTokenExpired(CurrentTokenUpdatedAt) == false)
+      var currentToken = await _tokenStore.GetTokenAsync();
+      if (currentToken?.HasTokenExpired() == false)
       {
-        return CurrentToken;
+        return currentToken;
       }
 
       return await RefreshTokenAsync();
@@ -100,11 +118,10 @@ namespace IGDB
     public async Task<TwitchAccessToken> RefreshTokenAsync()
     {
       var accessToken = await _twitchClient.GetClientCredentialTokenAsync();
+      accessToken.TokenAcquiredAt = DateTimeOffset.UtcNow;
+      var storedToken = await _tokenStore.StoreTokenAsync(accessToken);
 
-      CurrentToken = accessToken;
-      CurrentTokenUpdatedAt = DateTimeOffset.UtcNow;
-
-      return accessToken;
+      return storedToken;
     }
   }
 }

@@ -51,7 +51,7 @@ namespace IGDB
     public static IGDBApi Create(string clientId, string clientSecret)
     {
       return Create(clientId, clientSecret,
-        new InMemoryTokenManager(new TwitchOAuthClient(clientId, clientSecret)));
+        new InMemoryTokenStore());
     }
 
     /// <summary>
@@ -59,21 +59,27 @@ namespace IGDB
     /// JSON serializer settings on top of any existing settings.
     /// </summary>
     /// <returns></returns>
-    public static IGDBApi Create(string clientId, string clientSecret, ITokenManager tokenManager)
+    public static IGDBApi Create(string clientId, string clientSecret, ITokenStore tokenStore)
     {
+      if (tokenStore == null)
+      {
+        throw new ArgumentNullException(nameof(tokenStore),
+          "A ITokenStore is required. Pass InMemoryTokenStore if you do not have a custom store implemented.");
+      }
+
+      var tokenManager = new TokenManager(tokenStore, new TwitchOAuthClient(clientId, clientSecret));
+
       // TODO: Provide custom IRequester to handle when API returns expired token
       var api = new RestClient("https://api.igdb.com/v4", async (request, cancellationToken) =>
       {
-        if (tokenManager != null)
-        {
-          var twitchToken = await tokenManager.AcquireTokenAsync();
+        var twitchToken = await tokenManager.AcquireTokenAsync();
 
-          if (twitchToken?.AccessToken != null)
-          {
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
-              "Bearer", twitchToken.AccessToken);
-          }
+        if (twitchToken?.AccessToken != null)
+        {
+          request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
+            "Bearer", twitchToken.AccessToken);
         }
+
       })
       {
         JsonSerializerSettings = DefaultJsonSerializerSettings
