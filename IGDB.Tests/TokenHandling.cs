@@ -40,7 +40,7 @@ namespace IGDB.Tests
       await client.QueryAsync<Game>("games");
       await client.QueryAsync<Game>("games");
 
-      Assert.NotEqual(tokenStore.CurrentToken.ExpiresIn, 0);
+      Assert.NotEqual(0, tokenStore.CurrentToken.ExpiresIn);
       Assert.True(tokenStore.Expired);
     }
 
