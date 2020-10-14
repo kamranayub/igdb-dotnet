@@ -2,8 +2,9 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Theme : ITimestamps, IIdentifier
+  public class Theme : ITimestamps, IIdentifier, IHasChecksum
   {
+    public string Checksum { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public long? Id { get; set; }
     public string Name { get; set; }

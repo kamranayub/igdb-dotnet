@@ -1,9 +1,10 @@
 namespace IGDB.Models
 {
-  public class Screenshot : IIdentifier
+  public class Screenshot : IIdentifier, IHasChecksum
   {
     public bool? AlphaChannel { get; set; }
     public bool? Animated { get; set; }
+    public string Checksum { get; set; }
     public IdentityOrValue<Game> Game { get; set; }
     public int? Height { get; set; }
     public long? Id { get; set; }

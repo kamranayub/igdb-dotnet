@@ -2,11 +2,12 @@ using System;
 
 namespace IGDB.Models
 {
-  public class Company : ITimestamps, IIdentifier
+  public class Company : ITimestamps, IIdentifier, IHasChecksum
   {
     public DateTimeOffset? ChangeDate { get; set; }
     public ChangeDateCategory ChangeDateCategory { get; set; }
     public IdentityOrValue<Company> ChangedCompanyId { get; set; }
+    public string Checksum { get; set; }
 
     /// <summary>
     /// ISO 3166-1 country code
@@ -19,7 +20,6 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<Game> Developed { get; set; }
     public long? Id { get; set; }
-
     public IdentityOrValue<CompanyLogo> Logo { get; set; }
 
     public string Name { get; set; }

@@ -2,10 +2,11 @@ using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class MultiplayerMode : IIdentifier
+  public class MultiplayerMode : IIdentifier, IHasChecksum
   {
     [JsonProperty("campaigncoop")]
     public bool? CampaignCoop { get; set; }
+    public string Checksum { get; set; }
     [JsonProperty("dropin")]
     public bool? DropIn { get; set; }
     public IdentityOrValue<Game> Game { get; set; }

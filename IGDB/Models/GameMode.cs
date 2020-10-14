@@ -2,8 +2,10 @@ using System;
 
 namespace IGDB.Models
 {
-  public class GameMode : ITimestamps, IIdentifier
+  public class GameMode : ITimestamps, IIdentifier, IHasChecksum
   {
+    
+    public string Checksum { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public long? Id { get; set; }
     public string Name { get; set; }
