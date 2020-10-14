@@ -33,7 +33,7 @@ Models are domain objects found in `IGDB.Models` and correspond directly to the 
 
 Some fields can be [expanded](https://api-docs.igdb.com/#expander) which is handled via the `IdentityOrValue` and `IdentitiesOrValues` wrapper.
 
-The IGDB API uses the Twitch Developer program to power its API so it requires an OAuth client app ID and secret, which you can find in your [Developer Portal](https://dev.twitch.tv/console/apps). Passing these to the `IGDBClient.Create` method will handle the OAuth bearer token management for you (see _Custom Token Management_ below for details).
+The IGDB API uses the Twitch Developer program to power its API so it requires an OAuth client app ID and secret, which you can find in your [Developer Portal](https://dev.twitch.tv/console/apps). Passing these to the `IGDBClient` constructor will handle the OAuth bearer token management for you (see _Custom Token Management_ below for details).
 
 See below for an example:
 
