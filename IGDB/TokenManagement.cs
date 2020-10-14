@@ -78,7 +78,6 @@ namespace IGDB
 
   public sealed class InMemoryTokenStore : ITokenStore
   {
-
     private static TwitchAccessToken CurrentToken { get; set; }
 
     public async Task<TwitchAccessToken> StoreTokenAsync(TwitchAccessToken token)
