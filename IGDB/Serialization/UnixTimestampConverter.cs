@@ -23,7 +23,14 @@ namespace IGDB
           long parsedUnixTimestamp;
           if (long.TryParse(rawValue, out parsedUnixTimestamp))
           {
-            return DateTimeOffset.FromUnixTimeSeconds(parsedUnixTimestamp);
+            try
+            {
+              return DateTimeOffset.FromUnixTimeSeconds(parsedUnixTimestamp);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+              // it's invalid
+            }
           }
         }
       }

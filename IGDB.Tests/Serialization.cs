@@ -127,6 +127,15 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    public void Bug_GH_10_UnixTimestampConverter_Should_Deserialize_Companies_With_Low_Range_Timestamps()
+    {
+      var serialized = System.IO.File.ReadAllText("fixtures/bug-search-company-timestamps.json");
+      var deserialized = JsonConvert.DeserializeObject<Game[]>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+
+      Assert.True(true);
+    }
+
+    [Fact]
     public void Bug_Identity_Should_Handle_Mixed_Content()
     {
       var serialized = System.IO.File.ReadAllText("fixtures/bug-expanded-mixed-content.json");
