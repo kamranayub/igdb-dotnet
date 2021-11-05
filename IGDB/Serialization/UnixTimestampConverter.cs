@@ -20,10 +20,17 @@ namespace IGDB
         if (reader.TokenType == JsonToken.Integer)
         {
           var rawValue = reader.Value.ToString();
-          ulong parsedUnixTimestamp;
-          if (ulong.TryParse(rawValue, out parsedUnixTimestamp))
+          long parsedUnixTimestamp;
+          if (long.TryParse(rawValue, out parsedUnixTimestamp))
           {
-            return DateTimeOffset.FromUnixTimeSeconds((long)parsedUnixTimestamp);
+            try
+            {
+              return DateTimeOffset.FromUnixTimeSeconds(parsedUnixTimestamp);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+              // it's invalid
+            }
           }
         }
       }
