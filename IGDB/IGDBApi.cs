@@ -134,6 +134,7 @@ namespace IGDB
       public const string Collections = "collections";
       public const string Companies = "companies";
       public const string CompanyWebsites = "company_websites";
+      public const string CompanyLogos = "company_logos";
       public const string Covers = "covers";
       public const string ExternalGames = "external_games";
       public const string Franchies = "franchises";
