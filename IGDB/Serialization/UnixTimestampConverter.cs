@@ -21,9 +21,16 @@ namespace IGDB
         {
           var rawValue = reader.Value.ToString();
           long parsedUnixTimestamp;
-          if (long.TryParse(rawValue, out parsedUnixTimestamp) && parsedUnixTimestamp >= -62135596800 && parsedUnixTimestamp <= 253402300799)
+          if (long.TryParse(rawValue, out parsedUnixTimestamp))
           {
+            try
+            {
               return DateTimeOffset.FromUnixTimeSeconds(parsedUnixTimestamp);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+              // it's invalid
+            }
           }
         }
       }
