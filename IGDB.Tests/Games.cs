@@ -97,5 +97,14 @@ namespace IGDB.Tests
       Assert.NotNull(game.CreatedAt);
       Assert.True(game.CreatedAt.Value.Year > 1970);
     }
+    
+    [Fact]
+    public async Task ShouldReturnGameCount()
+    {
+      var gameCount = await _api.CountAsync(IGDBClient.Endpoints.Games, "where id = 4;");
+      
+      Assert.NotNull(gameCount);
+      Assert.Equal(1, gameCount.Count);
+    }
   }
 }
