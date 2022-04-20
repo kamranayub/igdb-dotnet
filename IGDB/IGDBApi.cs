@@ -27,16 +27,16 @@ namespace IGDB
     /// <returns>Array of IGDB models of the specified type</returns>
     [Post("/{endpoint}")]
     Task<T[]> QueryAsync<T>([Path] string endpoint, [Body] string query = null);
-    
-     /// <summary>
-     /// Queries a standard IGDB endpoint with an APIcalypse query. See endpoints in <see cref="IGDB.IGDBClient.Endpoints" />.
-     /// </summary>
-     /// <param name="endpoint">The IGDB endpoint name to query, see <see cref="IGDB.IGDBClient.Endpoints" /></param>
-     /// <param name="query">The APIcalypse query to send</param>
-     /// <typeparam name="T">The IGDB.Models.* entity to deserialize the response for.</typeparam>
-     /// <returns>Array of IGDB models of the specified type</returns>
-     [Post("/{endpoint}/count")]
-     Task<CountResponse> CountAsync([Path] string endpoint, [Body] string query = null);
+
+    /// <summary>
+    /// Queries a standard IGDB endpoint with an APIcalypse query. See endpoints in <see cref="IGDB.IGDBClient.Endpoints" />.
+    /// </summary>
+    /// <param name="endpoint">The IGDB endpoint name to query, see <see cref="IGDB.IGDBClient.Endpoints" /></param>
+    /// <param name="query">The APIcalypse query to send</param>
+    /// <typeparam name="T">The IGDB.Models.* entity to deserialize the response for.</typeparam>
+    /// <returns>Array of IGDB models of the specified type</returns>
+    [Post("/{endpoint}/count")]
+    Task<CountResponse> CountAsync([Path] string endpoint, [Body] string query = null);
   }
 
   public sealed class IGDBClient
@@ -74,6 +74,14 @@ namespace IGDB
     /// <returns></returns>
     public IGDBClient(string clientId, string clientSecret, ITokenStore tokenStore)
     {
+      if (clientId == null)
+      {
+        throw new ArgumentNullException(nameof(clientId), "Missing IGDB client ID. You can find this in the IGDB developer portal.");
+      }
+      if (clientSecret == null)
+      {
+        throw new ArgumentNullException(nameof(clientSecret), "Missing IGDB client secret. You can find this in the IGDB developer portal.");
+      }
       if (tokenStore == null)
       {
         throw new ArgumentNullException(nameof(tokenStore),
@@ -120,7 +128,7 @@ namespace IGDB
         throw apiEx;
       }
     }
-    
+
     public async Task<CountResponse> CountAsync(string endpoint, string query = null)
     {
       try
