@@ -9,6 +9,8 @@ namespace IGDB.Models
     Japan = 5,
     China = 6,
     Asia = 7,
-    Worldwide = 8
+    Worldwide = 8,
+    Korea = 9,
+    Brazil = 10
   }
 }

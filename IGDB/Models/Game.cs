@@ -115,7 +115,12 @@ namespace IGDB.Models
     StandaloneExpansion = 4,
     Mod = 5,
     Epuisode = 6,
-    Season = 7
+    Season = 7,
+    Remake = 8,
+    Remaster = 9,
+    ExpandedGame = 10,
+    Port = 11,
+    Fork = 12
   }
 
   public enum GameStatus
@@ -126,6 +131,7 @@ namespace IGDB.Models
     EarlyAccess = 4,
     Offline = 5,
     Cancelled = 6,
-    Rumored = 7
+    Rumored = 7,
+    Delisted = 8
   }
 }
