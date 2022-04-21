@@ -6,6 +6,28 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <OutputPath>lib</OutputPath>
+
+    <!-- Nuget Publishing -->
+    <PackageId>IGDB</PackageId>
+    <Description> IGDB APIv4 games database .NET Standard 2.0 wrapper. For detailed usage, see https://github.com/kamranayub/igdb-dotnet/blob/main/README.md</Description>
+    <Authors>Kamran Ayub</Authors>
+    <Copyright>Copyright 2020-2022 Kamran Ayub</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>http://github.com/kamranayub/igdb-dotnet</PackageProjectUrl>
+    <RepositoryBranch>main</RepositoryBranch>
+    <RepositoryUrl>http://github.com/kamranayub/igdb-dotnet</RepositoryUrl>
+    <PackageTags>igdb dotnet games giantbomb gog steam origin</PackageTags>
+    <PackageIconUrl>https://www.igdb.com/apple-touch-icon-72x72.png</PackageIconUrl>
+    <PackageReleaseNotes>See https://github.com/kamranayub/igdb-dotnet/releases</PackageReleaseNotes>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,8 +36,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="RestEase" Version="1.5.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="RestEase" Version="1.5.5" />
   </ItemGroup>
 
 </Project>

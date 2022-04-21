@@ -36,12 +36,21 @@ namespace IGDB.Models
   public enum ExternalCategory
   {
     Steam = 1,
+    TheGamesDb = 2,
     GiantBomb = 3,
     GOG = 5,
+    PushSquare = 6,
     YouTube = 10,
     Microsoft = 11,
     Apple = 13,
     Twitch = 14,
-    Android = 15
+    Android = 15,
+    Playstation = 16,
+    XboxLiveTitle = 18,
+    AmazonAsin = 20,
+    AmazonLuna = 22,
+    AmazonAdg = 23,
+    EpicGameStore = 26,
+    Oculus = 28
   }
 }
