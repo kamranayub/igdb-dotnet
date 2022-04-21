@@ -16,7 +16,7 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Set VERSION variable from tag
-        run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       - name: Pack
         run: dotnet pack -c Release IGDB/IGDB.csproj /p:Version=${VERSION} --output .
       - name: Push
