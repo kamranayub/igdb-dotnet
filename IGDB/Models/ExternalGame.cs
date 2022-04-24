@@ -40,6 +40,7 @@ namespace IGDB.Models
     GiantBomb = 3,
     GOG = 5,
     PushSquare = 6,
+    GamersGate = 8,
     YouTube = 10,
     Microsoft = 11,
     Apple = 13,
@@ -47,9 +48,11 @@ namespace IGDB.Models
     Android = 15,
     Playstation = 16,
     XboxLiveTitle = 18,
+    GamesPress = 19,
     AmazonAsin = 20,
     AmazonLuna = 22,
     AmazonAdg = 23,
+    PlayAsia = 24,
     EpicGameStore = 26,
     Oculus = 28
   }
