@@ -114,7 +114,7 @@ namespace IGDB.Models
     Bundle = 3,
     StandaloneExpansion = 4,
     Mod = 5,
-    Epuisode = 6,
+    Episode = 6,
     Season = 7,
     Remake = 8,
     Remaster = 9,
