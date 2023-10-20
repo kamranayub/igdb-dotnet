@@ -1,15 +1,15 @@
 using System;
-using Newtonsoft.Json;
 
 namespace IGDB.Models
 {
-  public class CollectionType : ITimestamps, IHasChecksum
+  public class EventNetwork : ITimestamps, IIdentifier, IHasChecksum
   {
     public string Checksum { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
-    public string Description { get; set; }
+    public IdentityOrValue<Event> Event { get; set; }
     public long? Id { get; set; }
-    public string Name { get; set; }
+    public IdentityOrValue<NetworkType> NetworkType { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
+    public string Url { get; set; }
   }
 }
