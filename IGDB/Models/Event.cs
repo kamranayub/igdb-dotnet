@@ -9,7 +9,7 @@ namespace IGDB.Models
     public string Description { get; set; }
     public DateTimeOffset? EndTime { get; set; }
     public IdentityOrValue<EventLogo> EventLogo { get; set; }
-    public IdentitiesOrValues<EventNetworks> EventNetwork { get; set; }
+    public IdentitiesOrValues<EventNetwork> EventNetwork { get; set; }
     public long? Id { get; set; }
     public IdentitiesOrValues<Game> Games { get; set; }
     public string LiveStreamUrl { get; set; }
