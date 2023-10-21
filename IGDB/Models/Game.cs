@@ -23,11 +23,15 @@ namespace IGDB.Models
 
     public IdentityOrValue<Collection> Collection { get; set; }
 
+    public IdentitiesOrValues<Collection> Collections { get; set; }
+
     public IdentityOrValue<Cover> Cover { get; set; }
 
     public DateTimeOffset? CreatedAt { get; set; }
 
     public IdentitiesOrValues<Game> Dlcs { get; set; }
+
+    public IdentitiesOrValues<Game> Expandedgames { get; set; }
 
     public IdentitiesOrValues<Game> Expansions { get; set; }
 
@@ -37,11 +41,15 @@ namespace IGDB.Models
 
     public int? Follows { get; set; }
 
+    public IdentitiesOrValues<Game> Forks { get; set; }
+
     public IdentityOrValue<Franchise> Franchise { get; set; }
 
     public IdentitiesOrValues<Franchise> Franchises { get; set; }
 
     public IdentitiesOrValues<GameEngine> GameEngines { get; set; }
+
+    public IdentitiesOrValues<GameLocalization> GameLocalizations { get; set; }
 
     public IdentitiesOrValues<GameMode> GameModes { get; set; }
 
@@ -55,6 +63,8 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<Keyword> Keywords { get; set; }
 
+    public IdentitiesOrValues<LanguageSupport> LanguageSupports { get; set; }
+
     public IdentitiesOrValues<MultiplayerMode> MultiplayerModes { get; set; }
 
     public string Name { get; set; }
@@ -65,11 +75,17 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<PlayerPerspective> PlayerPerspectives { get; set; }
 
+    public IdentitiesOrValues<Game> Ports { get; set; }
+
     public double? Rating { get; set; }
 
     public int? RatingCount { get; set; }
 
     public IdentitiesOrValues<ReleaseDate> ReleaseDates { get; set; }
+
+    public IdentitiesOrValues<Game> Remakes { get; set; }
+
+    public IdentitiesOrValues<Game> Remasters { get; set; }
 
     public IdentitiesOrValues<Screenshot> Screenshots { get; set; }
 
@@ -120,7 +136,9 @@ namespace IGDB.Models
     Remaster = 9,
     ExpandedGame = 10,
     Port = 11,
-    Fork = 12
+    Fork = 12,
+    Pack = 13,
+    Update = 14
   }
 
   public enum GameStatus
