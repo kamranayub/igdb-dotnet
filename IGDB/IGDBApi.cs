@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using IGDB.Models;
 using Newtonsoft.Json;
@@ -37,6 +38,18 @@ namespace IGDB
     /// <returns>Array of IGDB models of the specified type</returns>
     [Post("/{endpoint}/count")]
     Task<CountResponse> CountAsync([Path] string endpoint, [Body] string query = null);
+
+    /// <summary>
+    /// Retrieves list of available data dumps (IGDB Partners only)
+    /// </summary>
+    [Get("/dumps")]
+    Task<DataDump[]> GetDataDumpsAsync();
+
+    /// <summary>
+    /// Retrieves the download URL of a data dump (IGDB Partners only). Use the S3Url to download the dump (link expires after 5 minutes).
+    /// </summary>
+    [Get("/dumps/{endpoint}")]
+    Task<DataDumpEndpoint> GetDataDumpForEndpointAsync([Path] string endpoint);
   }
 
   public sealed class IGDBClient
@@ -143,6 +156,48 @@ namespace IGDB
           await _tokenManager.RefreshTokenAsync();
 
           return await _api.CountAsync(endpoint, query);
+        }
+
+        // Pass up any other exceptions
+        throw apiEx;
+      }
+    }
+
+    public async Task<DataDump[]> GetDataDumpsAsync()
+    {
+      try
+      {
+        return await _api.GetDataDumpsAsync();
+      }
+      catch (ApiException apiEx)
+      {
+        // Acquire new token and retry request (once)
+        if (IsInvalidTokenResponse(apiEx))
+        {
+          await _tokenManager.RefreshTokenAsync();
+
+          return await _api.GetDataDumpsAsync();
+        }
+
+        // Pass up any other exceptions
+        throw apiEx;
+      }
+    }
+
+    public async Task<DataDumpEndpoint> GetDataDumpEndpointAsync(string endpoint)
+    {
+      try
+      {
+        return await _api.GetDataDumpForEndpointAsync(endpoint);
+      }
+      catch (ApiException apiEx)
+      {
+        // Acquire new token and retry request (once)
+        if (IsInvalidTokenResponse(apiEx))
+        {
+          await _tokenManager.RefreshTokenAsync();
+
+          return await _api.GetDataDumpForEndpointAsync(endpoint);
         }
 
         // Pass up any other exceptions
