@@ -37,8 +37,6 @@ namespace IGDB.Models
 
     public DateTimeOffset? FirstReleaseDate { get; set; }
 
-    public int? Follows { get; set; }
-
     public IdentitiesOrValues<Game> Forks { get; set; }
 
     public IdentityOrValue<Franchise> Franchise { get; set; }
