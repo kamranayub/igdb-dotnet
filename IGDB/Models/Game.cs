@@ -21,8 +21,6 @@ namespace IGDB.Models
 
     public string Checksum { get; set; }
 
-    public IdentityOrValue<Collection> Collection { get; set; }
-
     public IdentitiesOrValues<Collection> Collections { get; set; }
 
     public IdentityOrValue<Cover> Cover { get; set; }
