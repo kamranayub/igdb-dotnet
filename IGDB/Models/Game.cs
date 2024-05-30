@@ -31,7 +31,7 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<Game> Dlcs { get; set; }
 
-    public IdentitiesOrValues<Game> Expandedgames { get; set; }
+    public IdentitiesOrValues<Game> ExpandedGames { get; set; }
 
     public IdentitiesOrValues<Game> Expansions { get; set; }
 
