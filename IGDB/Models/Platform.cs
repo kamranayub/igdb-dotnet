@@ -6,7 +6,7 @@ namespace IGDB.Models
   {
     public string Abbreviation { get; set; }
     public string AlternativeName { get; set; }
-    public PlatformCategory Category { get; set; }
+    public PlatformCategory? Category { get; set; }
     public string Checksum { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public int? Generation { get; set; }
