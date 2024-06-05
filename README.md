@@ -127,11 +127,15 @@ var thumb2X = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageS
 var coverSmall = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageSize.CoverSmall, retina: false);
 ```
 
+## Versioning Policy
+
+This project follows semantic versioning closely, so any API changes that may cause a compiler error results in a major version bump. Non-breaking enhancements or features result in a minor version bump. Bug fixes that don't add new features result in a patch version bump.
+
 ## Contributing
 
 ### Prerequisites
 
-- .NET Core SDK 2.2.5
+- .NET 6+
 - Visual Studio Code or VS 2017+
 
 ### Local Development
