@@ -9,6 +9,7 @@ namespace IGDB.Models
     public IdentitiesOrValues<CollectionRelation> AsParentRelations { get; set; }
     public string Checksum { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
+    public IdentitiesOrValues<Game> Games { get; set; }
     public long? Id { get; set; }
     public string Name { get; set; }
     public string Slug { get; set; }
