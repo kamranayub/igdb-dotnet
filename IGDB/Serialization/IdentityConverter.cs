@@ -10,8 +10,7 @@ namespace IGDB
   {
     public override bool CanConvert(Type objectType)
     {
-      return IsAssignableToGenericType(objectType, typeof(IdentityOrValue<>)) ||
-      IsAssignableToGenericType(objectType, typeof(IdentitiesOrValues<>));
+      return IsIdentityOrValue(objectType) || IsIdentitiesOrValues(objectType);
     }
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -24,7 +23,7 @@ namespace IGDB
       var expandedType = objectType.GetGenericArguments()[0];
       var value = reader.Value;
 
-      if (IsAssignableToGenericType(objectType, typeof(IdentitiesOrValues<>)))
+      if (IsIdentitiesOrValues(objectType))
       {
         if (reader.TokenType != JsonToken.StartArray)
         {
@@ -59,7 +58,7 @@ namespace IGDB
         var ctor = objectType.GetConstructor(new[] { typeof(object[]) });
         return ctor.Invoke(new[] { convertedValues });
       }
-      else if (IsAssignableToGenericType(objectType, typeof(IdentityOrValue<>)))
+      else if (IsIdentityOrValue(objectType))
       {
         if (reader.TokenType == JsonToken.StartObject)
         {
@@ -82,11 +81,11 @@ namespace IGDB
       {
         dynamic identity = value;
 
-        if (IsAssignableToGenericType(value.GetType(), typeof(IdentitiesOrValues<>)))
+        if (IsIdentitiesOrValues(value.GetType()))
         {
           serializer.Serialize(writer, identity.Ids ?? identity.Values ?? null);
         }
-        else if (IsAssignableToGenericType(value.GetType(), typeof(IdentityOrValue<>)))
+        else if (IsIdentityOrValue(value.GetType()))
         {
           serializer.Serialize(writer, identity.Id ?? identity.Value ?? null);
         }
@@ -97,23 +96,12 @@ namespace IGDB
       }
     }
 
-    public static bool IsAssignableToGenericType(Type givenType, Type genericType)
-    {
-      var interfaceTypes = givenType.GetInterfaces();
+    public static bool IsIdentityOrValue(Type givenType) {
+      return givenType.Name.Contains("IdentityOrValue`");
+    }
 
-      foreach (var it in interfaceTypes)
-      {
-        if (it.IsGenericType && it.GetGenericTypeDefinition() == genericType)
-          return true;
-      }
-
-      if (givenType.IsGenericType && givenType.GetGenericTypeDefinition() == genericType)
-        return true;
-
-      Type baseType = givenType.BaseType;
-      if (baseType == null) return false;
-
-      return IsAssignableToGenericType(baseType, genericType);
+    public static bool IsIdentitiesOrValues(Type givenType) {
+      return givenType.Name.Contains("IdentitiesOrValues`");
     }
   }
 
