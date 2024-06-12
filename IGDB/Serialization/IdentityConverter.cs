@@ -97,11 +97,11 @@ namespace IGDB
     }
 
     public static bool IsIdentityOrValue(Type givenType) {
-      return givenType.Name.Contains("IdentityOrValue`");
+      return givenType.Name.Contains(typeof(IdentityOrValue<>).Name);
     }
 
     public static bool IsIdentitiesOrValues(Type givenType) {
-      return givenType.Name.Contains("IdentitiesOrValues`");
+      return givenType.Name.Contains(typeof(IdentitiesOrValues<>).Name);
     }
   }
 
