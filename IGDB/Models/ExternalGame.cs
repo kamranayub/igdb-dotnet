@@ -12,7 +12,7 @@ namespace IGDB.Models
     public IdentityOrValue<Game> Game { get; set; }
     public long? Id { get; set; }
 
-    public ExternalGameMedia Media { get; set; }
+    public ExternalGameMedia? Media { get; set; }
 
     public string Name { get; set; }
 
