@@ -124,7 +124,7 @@ namespace IGDB.Serialization
     private static readonly IDictionary<Type, ObjectActivator> valueActivators
         = new Dictionary<Type, ObjectActivator>();
 
-    private static ObjectActivator GetIdentitiesActivator(Type objectType)
+    public static ObjectActivator GetIdentitiesActivator(Type objectType)
     {
       if (identitiesActivators.ContainsKey(objectType))
       {
