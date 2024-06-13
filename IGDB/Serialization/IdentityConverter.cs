@@ -5,7 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using static IGDB.Serialization.LambdaActivator;
 
-namespace IGDB
+namespace IGDB.Serialization
 {
   public class IdentityConverter : JsonConverter
   {
@@ -137,7 +137,7 @@ namespace IGDB
       return activator;
     }
 
-    private static ObjectActivator GetValuesActivator(Type objectType)
+    public static ObjectActivator GetValuesActivator(Type objectType)
     {
       if (valuesActivators.ContainsKey(objectType))
       {
@@ -150,7 +150,7 @@ namespace IGDB
       return activator;
     }
 
-    private static ObjectActivator GetIdentityActivator(Type objectType)
+    public static ObjectActivator GetIdentityActivator(Type objectType)
     {
       if (identityActivators.ContainsKey(objectType))
       {
@@ -163,7 +163,7 @@ namespace IGDB
       return activator;
     }
 
-    private static ObjectActivator GetValueActivator(Type objectType)
+    public static ObjectActivator GetValueActivator(Type objectType)
     {
       if (valueActivators.ContainsKey(objectType))
       {

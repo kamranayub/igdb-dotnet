@@ -4,13 +4,13 @@ using System.Reflection;
 
 namespace IGDB.Serialization
 {
+  public delegate object ObjectActivator(params object[] args);
+
   /// <summary>
   /// See: https://rogerjohansson.blog/2008/02/28/linq-expressions-creating-objects/
   /// </summary>
-  public static class LambdaActivator
+  internal static class LambdaActivator
   {
-    public delegate object ObjectActivator(params object[] args);
-
     public static ObjectActivator GetActivator(ConstructorInfo ctor)
     {
       ParameterInfo[] paramsInfo = ctor.GetParameters();
