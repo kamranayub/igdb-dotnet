@@ -96,12 +96,15 @@ namespace IGDB
       }
     }
 
+    private static readonly string IdentitiesOrValuesName = typeof(IdentitiesOrValues<>).Name;
+    private static readonly string IdentityOrValueName = typeof(IdentityOrValue<>).Name;
+    
     public static bool IsIdentityOrValue(Type givenType) {
-      return givenType.Name.Contains(typeof(IdentityOrValue<>).Name);
+      return givenType.Name.Contains(IdentityOrValueName);
     }
 
     public static bool IsIdentitiesOrValues(Type givenType) {
-      return givenType.Name.Contains(typeof(IdentitiesOrValues<>).Name);
+      return givenType.Name.Contains(IdentitiesOrValuesName);
     }
   }
 
