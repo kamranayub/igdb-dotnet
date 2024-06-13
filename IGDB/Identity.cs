@@ -49,5 +49,10 @@ namespace IGDB
       var list = values.Select(value => (T)value).ToArray();
       Values = list;
     }
+
+    public IdentitiesOrValues(T[] values)
+    {
+      Values = values;
+    }
   }
 }
