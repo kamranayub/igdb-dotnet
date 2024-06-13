@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace IGDB
+namespace IGDB.Serialization
 {
   public class UnixTimestampConverter : JsonConverter
   {
