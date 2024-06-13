@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using IGDB.Models;
-using RestEase;
 using Xunit;
 
 namespace IGDB.Tests

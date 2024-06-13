@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -115,65 +116,57 @@ namespace IGDB.Serialization
       return givenType.Name.Contains(IdentitiesOrValuesName);
     }
 
-    private static readonly IDictionary<Type, ObjectActivator> identitiesActivators
-    = new Dictionary<Type, ObjectActivator>();
-    private static readonly IDictionary<Type, ObjectActivator> valuesActivators
-    = new Dictionary<Type, ObjectActivator>();
-    private static readonly IDictionary<Type, ObjectActivator> identityActivators
-        = new Dictionary<Type, ObjectActivator>();
-    private static readonly IDictionary<Type, ObjectActivator> valueActivators
-        = new Dictionary<Type, ObjectActivator>();
+    private static readonly ConcurrentDictionary<Type, ObjectActivator> identitiesActivators
+            = new ConcurrentDictionary<Type, ObjectActivator>();
+    private static readonly ConcurrentDictionary<Type, ObjectActivator> valuesActivators
+        = new ConcurrentDictionary<Type, ObjectActivator>();
+    private static readonly ConcurrentDictionary<Type, ObjectActivator> identityActivators
+        = new ConcurrentDictionary<Type, ObjectActivator>();
+    private static readonly ConcurrentDictionary<Type, ObjectActivator> valueActivators
+        = new ConcurrentDictionary<Type, ObjectActivator>();
 
     public static ObjectActivator GetIdentitiesActivator(Type objectType)
     {
-      if (identitiesActivators.ContainsKey(objectType))
-      {
-        return identitiesActivators[objectType];
-      }
-
-      ConstructorInfo ctor = objectType.GetConstructors().Skip(1).First();
-      var activator = GetActivator(ctor);
-      identitiesActivators[objectType] = activator;
-      return activator;
+      return identitiesActivators.GetOrAdd(objectType, CreateIdentitiesActivator);
     }
 
     public static ObjectActivator GetValuesActivator(Type objectType)
     {
-      if (valuesActivators.ContainsKey(objectType))
-      {
-        return valuesActivators[objectType];
-      }
-
-      ConstructorInfo ctor = objectType.GetConstructors().Skip(2).First();
-      var activator = GetActivator(ctor);
-      valuesActivators[objectType] = activator;
-      return activator;
+      return valuesActivators.GetOrAdd(objectType, CreateValuesActivator);
     }
 
     public static ObjectActivator GetIdentityActivator(Type objectType)
     {
-      if (identityActivators.ContainsKey(objectType))
-      {
-        return identityActivators[objectType];
-      }
-
-      ConstructorInfo ctor = objectType.GetConstructors().Skip(1).First();
-      var activator = GetActivator(ctor);
-      identityActivators[objectType] = activator;
-      return activator;
+      return identityActivators.GetOrAdd(objectType, CreateIdentityActivator);
     }
 
     public static ObjectActivator GetValueActivator(Type objectType)
     {
-      if (valueActivators.ContainsKey(objectType))
-      {
-        return valueActivators[objectType];
-      }
+      return valueActivators.GetOrAdd(objectType, CreateValueActivator);
+    }
 
+    private static ObjectActivator CreateIdentitiesActivator(Type objectType)
+    {
+      ConstructorInfo ctor = objectType.GetConstructors().Skip(1).First();
+      return GetActivator(ctor);
+    }
+
+    private static ObjectActivator CreateValuesActivator(Type objectType)
+    {
       ConstructorInfo ctor = objectType.GetConstructors().Skip(2).First();
-      var activator = GetActivator(ctor);
-      valueActivators[objectType] = activator;
-      return activator;
+      return GetActivator(ctor);
+    }
+
+    private static ObjectActivator CreateIdentityActivator(Type objectType)
+    {
+      ConstructorInfo ctor = objectType.GetConstructors().Skip(1).First();
+      return GetActivator(ctor);
+    }
+
+    private static ObjectActivator CreateValueActivator(Type objectType)
+    {
+      ConstructorInfo ctor = objectType.GetConstructors().Skip(2).First();
+      return GetActivator(ctor);
     }
   }
 
