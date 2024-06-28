@@ -28,6 +28,25 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    public async Task ShouldReturnResponseWithHeaders()
+    {
+      var games = await _api.QueryWithResponseAsync<Game>(IGDBClient.Endpoints.Games);
+
+      Assert.NotNull(games);
+      Assert.True(games.GetContent().Length == 10);
+
+      var rawCount = games.ResponseMessage.Headers.GetValues("x-count").First();
+
+      Assert.NotNull(rawCount);
+      Assert.True(int.Parse(rawCount) > 0);
+
+      var queryCount = games.GetQueryCount();
+
+      Assert.NotNull(queryCount);
+      Assert.True(queryCount > 0);
+    }
+
+    [Fact]
     public async Task ShouldReturnResponseWithSingleGame()
     {
       var games = await _api.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,name,genres; where id = 4;");
@@ -159,12 +178,12 @@ namespace IGDB.Tests
 
       Assert.NotEmpty(game.Dlcs.Ids);
     }
-    
+
     [Fact]
     public async Task ShouldReturnGameCount()
     {
       var gameCount = await _api.CountAsync(IGDBClient.Endpoints.Games, "where id = 4;");
-      
+
       Assert.NotNull(gameCount);
       Assert.Equal(1, gameCount.Count);
     }

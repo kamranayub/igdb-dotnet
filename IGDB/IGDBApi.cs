@@ -31,6 +31,16 @@ namespace IGDB
     Task<T[]> QueryAsync<T>([Path] string endpoint, [Body] string query = null);
 
     /// <summary>
+    /// Queries a standard IGDB endpoint with an APIcalypse query and returns the deserialized response along with the HttpResponseMessage. See endpoints in <see cref="IGDB.IGDBClient.Endpoints" />.
+    /// </summary>
+    /// <param name="endpoint">The IGDB endpoint name to query, see <see cref="IGDB.IGDBClient.Endpoints" /></param>
+    /// <param name="query">The APIcalypse query to send</param>
+    /// <typeparam name="T">The IGDB.Models.* entity to deserialize the response for.</typeparam>
+    /// <returns>RestEase Response containing the HttpResponseMessage and the array of IGDB models of the specified type</returns>
+    [Post("/{endpoint}")]
+    Task<Response<T[]>> QueryWithResponseAsync<T>([Path] string endpoint, [Body] string query = null);
+
+    /// <summary>
     /// Queries a standard IGDB endpoint with an APIcalypse query. See endpoints in <see cref="IGDB.IGDBClient.Endpoints" />.
     /// </summary>
     /// <param name="endpoint">The IGDB endpoint name to query, see <see cref="IGDB.IGDBClient.Endpoints" /></param>
@@ -136,6 +146,27 @@ namespace IGDB
           await _tokenManager.RefreshTokenAsync();
 
           return await _api.QueryAsync<T>(endpoint, query);
+        }
+
+        // Pass up any other exceptions
+        throw apiEx;
+      }
+    }
+
+    public async Task<Response<T[]>> QueryWithResponseAsync<T>(string endpoint, string query = null)
+    {
+      try
+      {
+        return await _api.QueryWithResponseAsync<T>(endpoint, query);
+      }
+      catch (ApiException apiEx)
+      {
+        // Acquire new token and retry request (once)
+        if (IsInvalidTokenResponse(apiEx))
+        {
+          await _tokenManager.RefreshTokenAsync();
+
+          return await _api.QueryWithResponseAsync<T>(endpoint, query);
         }
 
         // Pass up any other exceptions
