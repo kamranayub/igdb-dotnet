@@ -69,6 +69,16 @@ game.Cover.Value.Width; // 756
 game.Cover.Value.Height;
 ```
 
+### Handling Query Counts
+
+You can use the `QueryWithResponse` API to return the raw `HttpResponseMessage` along with the deserialized response through `GetContent()`.
+
+There is an extension method available that will retrieve the `X-Count` header returned by IGDB on query endpoints. This avoids having to issue two requests to get the total results for a query. You also have full access to any headers through the `ResponseMessage` property.
+
+**See IGDB.Tests/Games.cs#ShouldReturnResponseWithHeaders** for an example test that covers this feature. You can also read more about the `Response<T>` [support in RestEase](https://github.com/canton7/RestEase?tab=readme-ov-file#return-types).
+
+Alternatively, you can also use the `CountAsync()` API to just retrieve the count for a query.
+
 ### Custom Token Management
 
 By default this client will request a OAuth bearer token on your behalf that is valid for 60 days and will store it statically **in memory**. If an invalid token is used and a 401 response is received, it will automatically acquire a new token and retry the request. See `TokenManagement.cs` for the default implementation.
