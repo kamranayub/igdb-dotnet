@@ -28,6 +28,7 @@ namespace IGDB.Models
     public string Slug { get; set; }
     public DateTimeOffset? StartDate { get; set; }
     public IdentityOrValue<DateFormat> StartDateFormat { get; set; }
+    public IdentityOrValue<CompanyStatus> Status { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
     public string Url { get; set; }
     public IdentitiesOrValues<CompanyWebsite> Websites { get; set; }
