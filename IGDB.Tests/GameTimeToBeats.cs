@@ -4,6 +4,7 @@ using Xunit;
 
 namespace IGDB.Tests
 {
+  [Collection("/game_time_to_beats")]
   public class GameTimeToBeats
   {
     IGDBClient _api;

@@ -6,6 +6,7 @@ using Xunit;
 
 namespace IGDB.Tests
 {
+  [Collection("/platforms")]
   public class Platforms
   {
     IGDBClient _api;

@@ -6,6 +6,7 @@ using Xunit;
 
 namespace IGDB.Tests
 {
+  [Collection("/games")]
   public class Games
   {
     IGDBClient _api;
