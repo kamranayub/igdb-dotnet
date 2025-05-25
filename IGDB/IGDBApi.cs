@@ -296,6 +296,8 @@ namespace IGDB
       public const string PlatformVersionReleaseDates = "platform_version_release_dates";
       public const string PlatformWebsites = "platform_websites";
       public const string PlayerPerspectives = "player_perspectives";
+	  public const string PopularityPrimitives = "popularity_primitives";
+	  public const string PopularityTypes = "popularity_types";
       public const string ReleaseDates = "release_dates";
       public const string ReleaseDateRegions = "release_date_regions";
       public const string Screenshots = "screenshots";
