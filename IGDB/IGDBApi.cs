@@ -124,6 +124,13 @@ namespace IGDB
             "Bearer", twitchToken.AccessToken);
         }
 
+        #if IGDB_TESTS
+        
+        // Workaround rate limit in an extremely naive way...
+        await Task.Delay(1000 / 3);
+
+        #endif
+
       })
       {
         JsonSerializerSettings = DefaultJsonSerializerSettings

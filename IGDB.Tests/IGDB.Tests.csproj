@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
+    <DefineConstants>$(DefineConstants);IGDB_TESTS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
