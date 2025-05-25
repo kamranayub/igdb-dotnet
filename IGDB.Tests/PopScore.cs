@@ -29,7 +29,7 @@ namespace IGDB.Tests
 				Assert.NotNull(popularityType.Checksum);
 				Assert.NotNull(popularityType.CreatedAt);
 				Assert.NotNull(popularityType.Name);
-				Assert.NotNull(popularityType.PopularitySource);
+				Assert.NotNull(popularityType.ExternalPopularitySource.Id);
 				Assert.NotNull(popularityType.UpdatedAt);
 			}
 		}
@@ -47,9 +47,8 @@ namespace IGDB.Tests
 			foreach (var popularityPrimitive in popularityPrimitives)
 			{
 				Assert.NotNull(popularityPrimitive.CalculatedAt);
-				//Assert.NotNull(popularityPrimitive.Checksum);
 				Assert.NotNull(popularityPrimitive.CreatedAt);
-				Assert.NotNull(popularityPrimitive.PopularitySource);
+				Assert.NotNull(popularityPrimitive.ExternalPopularitySource.Id);
 				Assert.NotNull(popularityPrimitive.PopularityType);
 				Assert.NotNull(popularityPrimitive.UpdatedAt);
 				Assert.NotNull(popularityPrimitive.Value);

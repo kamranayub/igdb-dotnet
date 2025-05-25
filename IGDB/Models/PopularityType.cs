@@ -7,7 +7,7 @@ namespace IGDB.Models
 		public string Checksum { get; set; }
 		public DateTimeOffset? CreatedAt { get; set; }
 		public string Name { get; set; }
-		public PopularitySource? PopularitySource { get; set; }
+		public IdentityOrValue<ExternalGameSource> ExternalPopularitySource { get; set; }
 		public DateTimeOffset? UpdatedAt { get; set; }
 	}
 }
