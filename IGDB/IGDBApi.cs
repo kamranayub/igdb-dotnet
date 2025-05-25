@@ -278,6 +278,7 @@ namespace IGDB
       public const string GameModes = "game_modes";
       public const string GameReleaseFormats = "game_release_formats";
       public const string GameStatuses = "game_statuses";
+      public const string GameTimeToBeats = "game_time_to_beats";
       public const string GameTypes = "game_types";
       public const string GameVersionFeatures = "game_version_features";
       public const string GameVersionFeatureValues = "game_version_feature_values";
