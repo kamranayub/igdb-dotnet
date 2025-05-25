@@ -17,8 +17,6 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<Game> Bundles { get; set; }
 
-    public Category? Category { get; set; }
-
     public string Checksum { get; set; }
 
     public IdentitiesOrValues<Collection> Collections { get; set; }
@@ -48,6 +46,8 @@ namespace IGDB.Models
     public IdentitiesOrValues<GameLocalization> GameLocalizations { get; set; }
 
     public IdentitiesOrValues<GameMode> GameModes { get; set; }
+    public IdentityOrValue<GameStatus> GameStatus { get; set; }
+    public IdentityOrValue<GameType> GameType { get; set; }
 
     public IdentitiesOrValues<Genre> Genres { get; set; }
 
@@ -91,8 +91,6 @@ namespace IGDB.Models
 
     public IdentitiesOrValues<Game> StandaloneExpansions { get; set; }
 
-    public GameStatus? Status { get; set; }
-
     public string Storyline { get; set; }
 
     public string Summary { get; set; }
@@ -116,36 +114,5 @@ namespace IGDB.Models
     public IdentitiesOrValues<GameVideo> Videos { get; set; }
 
     public IdentitiesOrValues<Website> Websites { get; set; }
-  }
-
-  public enum Category
-  {
-    MainGame = 0,
-    DlcAddon = 1,
-    Expansion = 2,
-    Bundle = 3,
-    StandaloneExpansion = 4,
-    Mod = 5,
-    Episode = 6,
-    Season = 7,
-    Remake = 8,
-    Remaster = 9,
-    ExpandedGame = 10,
-    Port = 11,
-    Fork = 12,
-    Pack = 13,
-    Update = 14
-  }
-
-  public enum GameStatus
-  {
-    Released = 0,
-    Alpha = 2,
-    Beta = 3,
-    EarlyAccess = 4,
-    Offline = 5,
-    Cancelled = 6,
-    Rumored = 7,
-    Delisted = 8
   }
 }

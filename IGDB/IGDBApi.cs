@@ -252,23 +252,34 @@ namespace IGDB
     public static class Endpoints
     {
       public const string AgeRating = "age_ratings";
-      public const string AgeRatingContentDescriptions = "age_rating_content_descriptions";
+      public const string AgeRatingCategories = "age_rating_categories";
+      public const string AgeRatingContentDescriptionsV2 = "age_rating_content_descriptions_v2";
+      public const string AgeRatingOrganizations = "age_rating_organizations";
       public const string AlternativeNames = "alternative_names";
       public const string Artworks = "artworks";
       public const string Characters = "characters";
+      public const string CharacterGenders = "character_genders";
       public const string CharacterMugShots = "character_mug_shots";
+      public const string CharacterSpecies = "character_species";
       public const string Collections = "collections";
       public const string Companies = "companies";
+      public const string CompanyStatus = "company_status";
       public const string CompanyWebsites = "company_websites";
       public const string CompanyLogos = "company_logos";
       public const string Covers = "covers";
+      public const string DateFormats = "date_formats";
       public const string ExternalGames = "external_games";
+      public const string ExternalGameSources = "external_game_sources";
       public const string Franchies = "franchises";
       public const string Games = "games";
       public const string GameEngines = "game_engines";
       public const string GameEngineLogos = "game_engine_logos";
       public const string GameVersions = "game_versions";
       public const string GameModes = "game_modes";
+      public const string GameReleaseFormats = "game_release_formats";
+      public const string GameStatuses = "game_statuses";
+      public const string GameTimeToBeats = "game_time_to_beats";
+      public const string GameTypes = "game_types";
       public const string GameVersionFeatures = "game_version_features";
       public const string GameVersionFeatureValues = "game_version_feature_values";
       public const string GameVideos = "game_videos";
@@ -279,6 +290,7 @@ namespace IGDB
       public const string Platforms = "platforms";
       public const string PlatformFamilies = "platform_families";
       public const string PlatformLogos = "platform_logos";
+      public const string PlatformTypes = "platform_types";
       public const string PlatformVersions = "platform_versions";
       public const string PlatformVersionCompanies = "platform_version_companies";
       public const string PlatformVersionReleaseDates = "platform_version_release_dates";
@@ -287,10 +299,12 @@ namespace IGDB
 	  public const string PopularityPrimitives = "popularity_primitives";
 	  public const string PopularityTypes = "popularity_types";
       public const string ReleaseDates = "release_dates";
+      public const string ReleaseDateRegions = "release_date_regions";
       public const string Screenshots = "screenshots";
       public const string Search = "search";
       public const string Themes = "themes";
       public const string Websites = "websites";
+      public const string WebsiteTypes = "website_types";
     }
   }
 }
