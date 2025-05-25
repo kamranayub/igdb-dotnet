@@ -5,7 +5,7 @@ namespace IGDB.Models
   public class Company : ITimestamps, IIdentifier, IHasChecksum
   {
     public DateTimeOffset? ChangeDate { get; set; }
-    public ChangeDateCategory ChangeDateCategory { get; set; }
+    public IdentityOrValue<DateFormat> ChangeDateFormat { get; set; }
     public IdentityOrValue<Company> ChangedCompanyId { get; set; }
     public string Checksum { get; set; }
 
@@ -27,34 +27,10 @@ namespace IGDB.Models
     public IdentitiesOrValues<Game> Published { get; set; }
     public string Slug { get; set; }
     public DateTimeOffset? StartDate { get; set; }
-    public StartDateCategory? StartDateCategory { get; set; }
+    public IdentityOrValue<DateFormat> StartDateFormat { get; set; }
+    public IdentityOrValue<CompanyStatus> Status { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
     public string Url { get; set; }
     public IdentitiesOrValues<CompanyWebsite> Websites { get; set; }
-
-  }
-
-  public enum ChangeDateCategory
-  {
-    YYYYMMMMDD = 0,
-    YYYYMMMM = 1,
-    YYYY = 2,
-    YYYYQ1 = 3,
-    YYYYQ2 = 4,
-    YYYYQ3 = 5,
-    YYYYQ4 = 6,
-    TBD = 7
-  }
-
-  public enum StartDateCategory
-  {
-    YYYYMMMMDD = 0,
-    YYYYMMMM = 1,
-    YYYY = 2,
-    YYYYQ1 = 3,
-    YYYYQ2 = 4,
-    YYYYQ3 = 5,
-    YYYYQ4 = 6,
-    TBD = 7
   }
 }

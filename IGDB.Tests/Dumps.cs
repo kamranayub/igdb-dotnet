@@ -31,7 +31,7 @@ namespace IGDB.Tests
     [Fact]
     public async Task ShouldReturnGamesEndpointDump()
     {
-      var gameDump = await _api.GetDataDumpEndpointAsync("games");
+      var gameDump = await _api.GetDataDumpEndpointAsync(IGDBClient.Endpoints.Games);
 
       Assert.NotNull(gameDump);
       Assert.NotNull(gameDump.S3Url);
