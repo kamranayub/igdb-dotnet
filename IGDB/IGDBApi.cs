@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using IGDB.Models;
 using IGDB.Serialization;
+using Microsoft.Extensions.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Polly;
+using Polly.RateLimit;
 using RestEase;
+using RestEase.Implementation;
 
 namespace IGDB
 {
@@ -81,6 +86,19 @@ namespace IGDB
     };
 
     /// <summary>
+    /// Default policy for IGDB API requests. This policy wraps a bulkhead and rate limit policy 
+    /// to ensure that no more than 8 concurrent requests are made, 
+    /// and no more than 4 requests are made every 10 seconds.
+    /// </summary>
+    public static IAsyncPolicy<HttpResponseMessage> DefaultPolicy { get; } 
+        = Policy.WrapAsync(
+            // Bulkhead: no more than 8 concurrent requests, zero queue
+            Policy.BulkheadAsync<HttpResponseMessage>(maxParallelization: 8, maxQueuingActions: 0),
+            // RateLimit: no more than 4 calls per 10s
+            Policy.RateLimitAsync<HttpResponseMessage>(4, TimeSpan.FromSeconds(10))
+        );
+
+    /// <summary>
     /// Create a IGDB API client based on a custom-created RestEase client. Adds required
     /// JSON serializer settings on top of any existing settings. Uses default in-memory access token management.
     /// </summary>
@@ -96,7 +114,7 @@ namespace IGDB
     /// JSON serializer settings on top of any existing settings.
     /// </summary>
     /// <returns></returns>
-    public IGDBClient(string clientId, string clientSecret, ITokenStore tokenStore)
+    public IGDBClient(string clientId, string clientSecret, ITokenStore tokenStore, IAsyncPolicy<HttpResponseMessage> policy = null)
     {
       if (clientId == null)
       {
@@ -112,9 +130,14 @@ namespace IGDB
           "A ITokenStore is required. Pass InMemoryTokenStore if you do not have a custom store implemented.");
       }
 
-      _tokenManager = new TokenManager(tokenStore, new TwitchOAuthClient(clientId, clientSecret));
+      if (policy == null)
+      {
+        policy = DefaultPolicy;
+      }
 
-      var api = new RestClient("https://api.igdb.com/v4", async (request, cancellationToken) =>
+      var messageHandler = new PolicyHttpMessageHandler(policy)
+      {
+        InnerHandler = new ModifyingClientHttpHandler(async (request, cancellationToken) =>
       {
         var twitchToken = await _tokenManager.AcquireTokenAsync();
 
@@ -123,19 +146,18 @@ namespace IGDB
           request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
             "Bearer", twitchToken.AccessToken);
         }
-
-        #if IGDB_TESTS
-        
-        // Workaround rate limit in an extremely naive way...
-        await Task.Delay(1000 / 3);
-
-        #endif
-
       })
+      };
+
+      _tokenManager = new TokenManager(tokenStore, new TwitchOAuthClient(clientId, clientSecret));
+
+      var api = new RestClient("https://api.igdb.com/v4", messageHandler)
       {
         JsonSerializerSettings = DefaultJsonSerializerSettings
       }.For<IGDBApi>();
+
       api.ClientId = clientId;
+
       _api = api;
     }
 
@@ -144,6 +166,10 @@ namespace IGDB
       try
       {
         return await _api.QueryAsync<T>(endpoint, query);
+      }
+      catch (RateLimitRejectedException rateLimitEx)
+      {
+        
       }
       catch (ApiException apiEx)
       {
