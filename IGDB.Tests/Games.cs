@@ -104,6 +104,38 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    public async Task ShouldReturnResponseWithExpandedTableEnumFieldsForAug2025Migration()
+    {
+      var games = await _api.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,game_type.type,game_status.status; where id = 52625;");
+
+      Assert.NotNull(games);
+
+      var game = games[0];
+
+      Assert.NotNull(game.GameStatus.Value);
+      Assert.Equal("Cancelled", game.GameStatus.Value.Status);
+
+      Assert.NotNull(game.GameType.Value);
+      Assert.Equal("Main Game", game.GameType.Value.Type);
+    }
+
+    [Fact]
+    public async Task ShouldReturnResponseWithNonExpandedTableEnumFieldsForAug2025Migration()
+    {
+      var games = await _api.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,game_type,game_status; where id = 52625;");
+
+      Assert.NotNull(games);
+
+      var game = games[0];
+
+      Assert.NotNull(game.GameStatus.Id);
+      Assert.Equal(6, game.GameStatus.Id);
+
+      Assert.NotNull(game.GameType.Id);
+      Assert.Equal(0, game.GameType.Id);
+    }
+
+    [Fact]
     public async Task ShouldReturnResponseWithUnixTimestamp()
     {
       var games = await _api.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,created_at; where id = 4;");
