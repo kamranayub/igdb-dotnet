@@ -21,6 +21,7 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    [Trait("Category", "SkipCi")]
     public async Task ShouldReturnDumpsList()
     {
       var dumps = await _api.GetDataDumpsAsync();
@@ -30,6 +31,7 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    [Trait("Category", "SkipCi")]
     public async Task ShouldReturnGamesEndpointDump()
     {
       var gameDump = await _api.GetDataDumpEndpointAsync(IGDBClient.Endpoints.Games);
