@@ -6,13 +6,14 @@ using Xunit;
 
 namespace IGDB.Tests
 {
+  [Collection("/platforms")]
   public class Platforms
   {
     IGDBClient _api;
 
     public Platforms()
     {
-      _api = new IGDB.IGDBClient(
+      _api = IGDBClient.CreateWithDefaults(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
       );

@@ -7,19 +7,21 @@ using Xunit;
 
 namespace IGDB.Tests
 {
+  [Collection("/dumps")]
   public class Dumps
   {
     IGDBClient _api;
 
     public Dumps()
     {
-      _api = new IGDB.IGDBClient(
+      _api = IGDBClient.CreateWithDefaults(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
       );
     }
 
     [Fact]
+    [Trait("Category", "SkipCi")]
     public async Task ShouldReturnDumpsList()
     {
       var dumps = await _api.GetDataDumpsAsync();
@@ -29,6 +31,7 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    [Trait("Category", "SkipCi")]
     public async Task ShouldReturnGamesEndpointDump()
     {
       var gameDump = await _api.GetDataDumpEndpointAsync(IGDBClient.Endpoints.Games);

@@ -33,7 +33,14 @@ Models are domain objects found in `IGDB.Models` and correspond directly to the 
 
 Some fields can be [expanded](https://api-docs.igdb.com/#expander) which is handled via the `IdentityOrValue` and `IdentitiesOrValues` wrapper.
 
-The IGDB API uses the Twitch Developer program to power its API so it requires an OAuth client app ID and secret, which you can find in your [Developer Portal](https://dev.twitch.tv/console/apps). Passing these to the `IGDBClient` constructor will handle the OAuth bearer token management for you (see _Custom Token Management_ below for details).
+The IGDB API uses the Twitch Developer program to power its API so it requires an OAuth client app ID and secret, which you can find in your [Developer Portal](https://dev.twitch.tv/console/apps). Passing these to the `IGDBClient` will handle the OAuth bearer token management for you (see _Custom Token Management_ below for details).
+
+The `CreateWithDefaults` static method will:
+
+- Use an in-memory OAuth token store
+- Use a default [Polly](https://github.com/App-vNext/Polly) API policy that handles IGDB's rate-limiting policies (see `IGDB.ApiPolicy.DefaultApiPolicy`)
+
+You can also construct a new instance of `IGDBClient` to override any of these defaults.
 
 See below for an example:
 
@@ -41,7 +48,7 @@ See below for an example:
 using IGDB;
 using IGDB.Models;
 
-var igdb = new IGDBClient(
+var igdb = IGDBClient.CreateWithDefaults(
   // Found in Twitch Developer portal for your app
   Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
   Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
@@ -104,8 +111,8 @@ class CustomTokenStore : ITokenStore {
 
 }
 
-// Create an IGDB API client, passing custom token store
-var api = new IGDBClient(clientId, clientSecret, new CustomTokenStore());
+// Create a custom IGDB API client, passing custom token store
+var api = new IGDBClient(clientId, clientSecret, new CustomTokenStore(), ApiPolicy.DefaultApiPolicy);
 ```
 
 - `GetTokenAsync` - Gets a token
@@ -136,6 +143,12 @@ var thumb2X = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageS
 // Covers
 var coverSmall = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageSize.CoverSmall, retina: false);
 ```
+
+### Default API Policy
+
+IGDB limits requests to **4 per second** with a maximum concurrent request limit of **8**.
+
+The `ApiPolicy.DefaultApiPolicy` uses Polly to create some safe defaults that tend to work for most cases (tested with internal test suite with all tests running in parallel) but you can feel free to pass your own `IAsyncPolicy<HttpResponseMessage>` to the `IGDBClient` constructor overload.
 
 ## Versioning Policy
 

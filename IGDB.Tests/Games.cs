@@ -6,13 +6,14 @@ using Xunit;
 
 namespace IGDB.Tests
 {
+  [Collection("/games")]
   public class Games
   {
     IGDBClient _api;
 
     public Games()
     {
-      _api = new IGDB.IGDBClient(
+      _api = IGDBClient.CreateWithDefaults(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
       );
