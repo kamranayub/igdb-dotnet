@@ -13,7 +13,7 @@ namespace IGDB.Tests
 
     public Platforms()
     {
-      _api = new IGDB.IGDBClient(
+      _api = IGDBClient.CreateWithDefaults(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET")
       );

@@ -18,7 +18,8 @@ namespace IGDB.Tests
       var invalidTokenClient = new IGDB.IGDBClient(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET"),
-        tokenStore
+        tokenStore,
+        ApiPolicy.DefaultApiPolicy
       );
 
       var games = await invalidTokenClient.QueryAsync<Game>("games");
@@ -34,7 +35,8 @@ namespace IGDB.Tests
       var client = new IGDB.IGDBClient(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET"),
-        tokenStore
+        tokenStore,
+        ApiPolicy.DefaultApiPolicy
       );
 
       await client.QueryAsync<Game>("games");
@@ -51,7 +53,8 @@ namespace IGDB.Tests
       var client = new IGDB.IGDBClient(
         Environment.GetEnvironmentVariable("IGDB_CLIENT_ID"),
         Environment.GetEnvironmentVariable("IGDB_CLIENT_SECRET"),
-        tokenStore
+        tokenStore,
+        ApiPolicy.DefaultApiPolicy
       );
 
       await client.QueryAsync<Game>("games");
