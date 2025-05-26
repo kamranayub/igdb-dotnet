@@ -144,11 +144,11 @@ var thumb2X = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageS
 var coverSmall = IGDB.ImageHelper.GetImageUrl(imageId: artworkImageId, size: ImageSize.CoverSmall, retina: false);
 ```
 
-### Default API Policy
+### Custom API Policies with Polly
 
 IGDB limits requests to **4 per second** with a maximum concurrent request limit of **8**.
 
-The `ApiPolicy.DefaultApiPolicy` uses Polly to create some safe defaults that tend to work for most cases (tested with internal test suite with all tests running in parallel) but you can feel free to pass your own `IAsyncPolicy<HttpResponseMessage>` to the `IGDBClient` constructor overload.
+The `IGDB.ApiPolicy.DefaultApiPolicy` uses [Polly](https://github.com/App-vNext/Polly) to create some safe defaults that tend to work for most cases (tested with internal test suite with all tests running in parallel) but you can feel free to pass your own `IAsyncPolicy<HttpResponseMessage>` to the `IGDBClient` constructor overload.
 
 ## Versioning Policy
 
