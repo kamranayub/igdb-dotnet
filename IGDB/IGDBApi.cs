@@ -9,7 +9,6 @@ using Microsoft.Extensions.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Polly;
-using Polly.RateLimit;
 using RestEase;
 using RestEase.Implementation;
 
@@ -86,19 +85,6 @@ namespace IGDB
     };
 
     /// <summary>
-    /// Default policy for IGDB API requests. This policy wraps a bulkhead and rate limit policy 
-    /// to ensure that no more than 8 concurrent requests are made, 
-    /// and no more than 4 requests are made every 10 seconds.
-    /// </summary>
-    public static IAsyncPolicy<HttpResponseMessage> DefaultPolicy { get; } 
-        = Policy.WrapAsync(
-            // Bulkhead: no more than 8 concurrent requests, zero queue
-            Policy.BulkheadAsync<HttpResponseMessage>(maxParallelization: 8, maxQueuingActions: 0),
-            // RateLimit: no more than 4 calls per 10s
-            Policy.RateLimitAsync<HttpResponseMessage>(4, TimeSpan.FromSeconds(10))
-        );
-
-    /// <summary>
     /// Create a IGDB API client based on a custom-created RestEase client. Adds required
     /// JSON serializer settings on top of any existing settings. Uses default in-memory access token management.
     /// </summary>
@@ -132,7 +118,7 @@ namespace IGDB
 
       if (policy == null)
       {
-        policy = DefaultPolicy;
+        policy = ApiPolicy.DefaultApiPolicy;
       }
 
       var messageHandler = new PolicyHttpMessageHandler(policy)
@@ -166,10 +152,6 @@ namespace IGDB
       try
       {
         return await _api.QueryAsync<T>(endpoint, query);
-      }
-      catch (RateLimitRejectedException rateLimitEx)
-      {
-        
       }
       catch (ApiException apiEx)
       {
@@ -329,8 +311,8 @@ namespace IGDB
       public const string PlatformVersionReleaseDates = "platform_version_release_dates";
       public const string PlatformWebsites = "platform_websites";
       public const string PlayerPerspectives = "player_perspectives";
-	  public const string PopularityPrimitives = "popularity_primitives";
-	  public const string PopularityTypes = "popularity_types";
+      public const string PopularityPrimitives = "popularity_primitives";
+      public const string PopularityTypes = "popularity_types";
       public const string ReleaseDates = "release_dates";
       public const string ReleaseDateRegions = "release_date_regions";
       public const string Screenshots = "screenshots";
