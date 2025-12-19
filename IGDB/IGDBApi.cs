@@ -303,6 +303,7 @@ namespace IGDB
       public const string AgeRatingOrganizations = "age_rating_organizations";
       public const string AlternativeNames = "alternative_names";
       public const string Artworks = "artworks";
+      public const string ArtworkTypes = "artwork_types";
       public const string Characters = "characters";
       public const string CharacterGenders = "character_genders";
       public const string CharacterMugShots = "character_mug_shots";

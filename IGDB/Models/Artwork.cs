@@ -6,6 +6,7 @@ namespace IGDB.Models
     {
         public bool? AlphaChannel { get; set; }
         public bool? Animated { get; set; }
+        public IdentityOrValue<ArtworkType> ArtworkType { get; set; }
         public string Checksum { get; set; }
         public IdentityOrValue<Game> Game { get; set; }
         public int? Height { get; set; }
