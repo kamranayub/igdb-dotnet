@@ -112,6 +112,35 @@ namespace IGDB.Tests
     }
 
     [Fact]
+    public void Should_Deserialize_Artwork_With_ArtworkType_And_ImageType()
+    {
+      var serialized = @"[{
+        ""id"": 1,
+        ""artwork_type"": { ""id"": 2, ""name"": ""Key Art"", ""slug"": ""key-art"", ""created_at"": 1735689600, ""updated_at"": 1735689600, ""checksum"": ""abc"" },
+        ""image_type"": 3,
+        ""image_id"": ""ar1"",
+        ""game"": 4
+      }]";
+      var deserialized = JsonConvert.DeserializeObject<Artwork[]>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+
+      Assert.Equal(2, deserialized[0].ArtworkType.Value.Id);
+      Assert.Equal("Key Art", deserialized[0].ArtworkType.Value.Name);
+      Assert.Equal("key-art", deserialized[0].ArtworkType.Value.Slug);
+      Assert.Equal(1735689600, deserialized[0].ArtworkType.Value.CreatedAt.Value.ToUnixTimeSeconds());
+      Assert.Equal(3, deserialized[0].ImageType.Id);
+    }
+
+    [Fact]
+    public void Should_Deserialize_Cover_With_ImageType()
+    {
+      var serialized = @"[{ ""id"": 1, ""image_type"": { ""id"": 3, ""name"": ""Cover"" } }]";
+      var deserialized = JsonConvert.DeserializeObject<Cover[]>(serialized, IGDB.IGDBClient.DefaultJsonSerializerSettings);
+
+      Assert.Equal(3, deserialized[0].ImageType.Value.Id);
+      Assert.Equal("Cover", deserialized[0].ImageType.Value.Name);
+    }
+
+    [Fact]
     public void UnixTimestampConverter_Should_Serialize_And_Deserialize_Unix_Time()
     {
       var time = DateTimeOffset.Now;

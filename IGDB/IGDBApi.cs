@@ -303,6 +303,7 @@ namespace IGDB
       public const string AgeRatingOrganizations = "age_rating_organizations";
       public const string AlternativeNames = "alternative_names";
       public const string Artworks = "artworks";
+      public const string ArtworkTypes = "artwork_types";
       public const string Characters = "characters";
       public const string CharacterGenders = "character_genders";
       public const string CharacterMugShots = "character_mug_shots";
@@ -330,6 +331,7 @@ namespace IGDB
       public const string GameVersionFeatureValues = "game_version_feature_values";
       public const string GameVideos = "game_videos";
       public const string Genres = "genres";
+      public const string ImageTypes = "image_types";
       public const string InvolvedCompanies = "involved_companies";
       public const string Keywords = "keywords";
       public const string MultiplayerModes = "multiplayer_modes";
